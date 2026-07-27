@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-tema="claro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Manual de Experimentos · Linguagem Python · Ramon Mayor Martins</title>
+<meta name="author" content="Ramon Mayor Martins">
+<meta name="description" content="Manual de Experimentos de Linguagem Python em quatro volumes: a linguagem, pacotes científicos, aprendizado de máquina e IA generativa. 372 exemplos executados.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --papel:#ffffff; --papel2:#f2f3f3; --tinta:#12141a; --suave:#666d72;
+  --regua:#dfe2e3; --verde:#2f9e41; --verde-txt:#1f7030; --vermelho:#cd191e;
+  --cx:#0a0c0a; --cx2:#141814; --cxlin:#252b25; --cxtxt:#d8e6d8;
+  --k:#ff7b6b; --s:#5fd97e; --c:#6d7a6d; --n:#c9e8d2; --fn:#ffffff;
+  --b:#9fe6b0; --o:#e6f0e6; --d:#ffab7d;
+  --mono:"Courier Prime","Courier New",Courier,"Nimbus Mono PS",
+    "Liberation Mono",monospace;
+  --larg:46rem;
+}
+html[data-tema="escuro"]{
+  --papel:#0d0f0d; --papel2:#141814; --tinta:#dfe6dd; --suave:#8d968b;
+  --regua:#282e28; --verde:#4cc063; --verde-txt:#5fd97e; --vermelho:#ff7b6b;
+}
+*{box-sizing:border-box}
+html{font-size:17.5px;scroll-behavior:smooth}
+body{margin:0;background:var(--papel);color:var(--tinta);
+  font-family:var(--mono);font-size:.92rem;line-height:1.72;
+  -webkit-font-smoothing:antialiased;font-variant-ligatures:none}
+.folha{max-width:var(--larg);margin:0 auto;padding:0 1.3rem 6rem}
+p{margin:0 0 .95rem}
+a{color:var(--verde-txt);text-decoration:none;border-bottom:1px solid
+  rgba(47,158,65,.35)}
+a:hover{border-bottom-color:var(--verde)}
+code{font-family:var(--mono);font-size:.92em;color:var(--verde-txt);
+  word-break:break-word}
+pre{font-family:var(--mono)}
+b{font-weight:700}
+h1,h2,h3,h4{font-weight:700;line-height:1.35}
+
+/* ---------- capa ---------- */
+.capa{display:table;table-layout:fixed;width:100%;max-width:var(--larg);
+  margin:0 auto;padding:1.5rem 1.3rem;height:100vh}
+.capa-centro{display:table-cell;vertical-align:middle;text-align:center}
+.capa pre{margin:0 auto;display:inline-block;text-align:left;
+  font-size:clamp(.48rem,2.35vw,.86rem);line-height:1.5;
+  color:var(--suave);white-space:pre;overflow:hidden}
+.capa .capa-tit{color:var(--tinta);font-weight:700}
+.capa .capa-sub{color:var(--verde-txt);font-weight:700}
+.capa .capa-parte{color:var(--vermelho);font-weight:700}
+.capa .capa-ver{color:var(--tinta)}
+.capa .capa-link{color:var(--verde-txt)}
+
+/* ---------- sumario ---------- */
+.sumario{margin:2.6rem 0 2rem}
+.sumario h2{font-size:.7rem;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--suave);font-weight:700;margin:0 0 .7rem;
+  border-bottom:3px double var(--tinta);padding-bottom:.4rem}
+.sumario ul{list-style:none;margin:0;padding:0}
+.toc-parte{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--vermelho);margin:1.3rem 0 .4rem}
+.toc-parte a{color:inherit;border:0}
+.toc-sec > a{display:flex;align-items:baseline;color:var(--tinta);
+  border:0;padding:.1rem 0;font-size:.9rem}
+.toc-n{color:var(--verde-txt);min-width:1.7rem;margin-right:.55rem}
+.toc-t{margin-right:.55rem}
+.toc-l{margin-right:.55rem}
+.toc-l{flex:1;border-bottom:1px dotted var(--regua);
+  transform:translateY(-.22rem)}
+.toc-c{font-size:.7rem;color:var(--suave)}
+.toc-sec > a:hover .toc-t{color:var(--verde-txt)}
+.toc-sub{list-style:none;margin:0 0 .45rem 2.25rem;padding:0;font-size:.78rem;
+  color:var(--suave);line-height:1.6}
+.toc-sub a{color:var(--suave);border:0}
+.toc-sub li{display:inline}
+.toc-sub li:not(:last-child):after{content:" · ";color:var(--regua)}
+
+/* ---------- partes e secoes ---------- */
+.parte{margin:4.5rem 0 2.6rem;padding:0}
+.parte::before,.parte::after{content:"================================================================================================";display:block;overflow:hidden;
+  white-space:nowrap;color:var(--tinta);font-size:.92rem;line-height:1.1}
+.parte::before{margin-bottom:1.1rem}
+.parte::after{margin-top:1.1rem}
+.parte-rot{font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--vermelho)}
+.parte-rot::before{content:"|| "}
+.parte h1{font-size:1.15rem;letter-spacing:.1em;text-transform:uppercase;
+  margin:.35rem 0 .4rem}
+.parte p{color:var(--suave);margin:0;font-size:.86rem}
+.secao{margin:3rem 0}
+.secao h2{display:block;font-size:1rem;letter-spacing:.1em;
+  text-transform:uppercase;margin:0 0 1rem;padding:0;border:0}
+.secao h2::before,.secao h2::after{content:"================================================================================================";display:block;
+  overflow:hidden;white-space:nowrap;letter-spacing:0;font-weight:400;
+  color:var(--tinta);font-size:.92rem;line-height:1.1}
+.secao h2::before{margin-bottom:.4rem}
+.secao h2::after{margin-top:.4rem}
+.secao-num{color:var(--verde-txt);margin-right:.85rem}
+.secao-num::before{content:"[ "} .secao-num::after{content:" ]"}
+.secao h3{font-size:.94rem;margin:2rem 0 .6rem;letter-spacing:.02em}
+.secao h3:before{content:"## ";color:var(--verde)}
+.tabela figcaption::before{content:"+-- ";color:var(--suave)}
+.abertura{color:var(--suave);margin-bottom:1.3rem;font-size:.88rem}
+ul.lista{list-style:none;margin:0 0 1rem;padding-left:1.4rem}
+ul.lista li{margin-bottom:.28rem;position:relative}
+ul.lista li::before{content:"*";position:absolute;left:-1.1rem;
+  color:var(--verde)}
+ol.lista{margin:0 0 1rem;padding-left:1.6rem}
+ol.lista li{margin-bottom:.28rem}
+ol.lista li::marker{color:var(--verde)}
+
+/* ---------- blocos de codigo ---------- */
+.codigo{margin:1.5rem 0 1.8rem;padding:0}
+.codigo::after{content:"+------------------------------------------------------------------------------------------------";display:block;overflow:hidden;
+  white-space:nowrap;color:var(--suave);margin-top:.15rem;
+  font-size:.9rem;line-height:1.1}
+.codigo-cab{display:flex;align-items:baseline;
+  padding-bottom:.1rem;margin-bottom:.45rem}
+.codigo-cab::before{content:"+--";color:var(--suave);margin-right:.45rem}
+.codigo-num{color:var(--verde-txt);font-size:.8rem;white-space:nowrap;
+  font-weight:700;margin-right:.6rem}
+.codigo-tit{flex:1;font-size:.88rem;margin-right:.6rem;
+  overflow:hidden;white-space:nowrap}
+.codigo-tit::after{content:" ------------------------------------------------------------------------------------------------";color:var(--suave)}
+.copiar{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;
+  color:var(--suave);background:none;border:1px solid var(--regua);
+  padding:.1rem .38rem;cursor:pointer;border-radius:2px}
+.copiar:hover{color:var(--verde-txt);border-color:var(--verde)}
+.code-desc{font-size:.85rem;color:var(--suave);margin:0 0 .55rem}
+.blackbox{background:var(--cx);border-left:3px solid var(--verde);
+  overflow-x:auto}
+.blackbox pre{margin:0;padding:.9rem 1rem}
+.blackbox code{color:var(--cxtxt);font-size:1em;font-family:inherit}
+.blackbox pre,.saida pre{font-size:.84rem;line-height:1.58;tab-size:4}
+.blackbox .k{color:var(--k)} .blackbox .s{color:var(--s)}
+.blackbox .c{color:var(--c);font-style:italic} .blackbox .n{color:var(--n)}
+.blackbox .fn{color:var(--fn)} .blackbox .b{color:var(--b)}
+.blackbox .o{color:var(--o)} .blackbox .d{color:var(--d)}
+.saida{background:var(--cx2);border-left:2px solid var(--cxlin);
+  padding:.55rem 1rem .65rem;overflow-x:auto}
+.saida-tag{display:block;font-size:.66rem;letter-spacing:.14em;
+  text-transform:uppercase;color:#788589;margin-bottom:.3rem}
+.saida-tag::before{content:"--- "} .saida-tag::after{content:" ---"}
+.saida pre{margin:0;color:#b6c2ba;white-space:pre-wrap}
+.figura{background:var(--cx2);border-left:2px solid var(--cxlin);
+  padding:.55rem 1rem .8rem}
+.figura img{display:block;width:100%;height:auto;background:#fff;
+  border-radius:2px;margin-top:.2rem}
+
+/* ---------- destaques ---------- */
+.callout{margin:1.2rem 0;padding:.1rem 0 .1rem .9rem;
+  border-left:2px solid var(--tinta);font-size:.88rem}
+.callout-tag{display:block;font-size:.62rem;letter-spacing:.2em;
+  text-transform:uppercase;margin-bottom:.25rem;color:var(--tinta)}
+.callout-tag::before{letter-spacing:0;margin-right:.35rem;
+  text-transform:none}
+.callout.nota .callout-tag::before{content:"[i]"}
+.callout.atencao .callout-tag::before{content:"[!]"}
+.callout.dica .callout-tag::before{content:"[*]"}
+.callout.sintaxe .callout-tag::before{content:"[>]"}
+.callout p{margin-bottom:.5rem}
+.callout.nota{border-left-color:var(--suave)}
+.callout.nota .callout-tag{color:var(--suave)}
+.callout.atencao{border-left-color:var(--vermelho)}
+.callout.atencao .callout-tag{color:var(--vermelho)}
+.callout.dica{border-left-color:var(--verde)}
+.callout.dica .callout-tag{color:var(--verde-txt)}
+.callout.sintaxe{border-left-color:var(--tinta);background:var(--papel2);
+  padding:.6rem .9rem}
+.experimentos{margin:1.7rem 0 2rem;padding:.2rem 0}
+.experimentos::before{content:"................................................................................................";display:block;overflow:hidden;
+  white-space:nowrap;color:var(--suave);font-size:.9rem;
+  line-height:1.1;margin-bottom:.5rem}
+.experimentos h4{font-size:.62rem;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--verde-txt);margin:0 0 .45rem}
+.experimentos h4::before{content:">> ";letter-spacing:0}
+.experimentos ol{margin:0;padding-left:1.15rem;font-size:.86rem}
+.experimentos li{margin-bottom:.28rem}
+.experimentos li::marker{color:var(--suave)}
+.diagrama{margin:1.5rem 0;padding:0;text-align:center}
+.diagrama img{max-width:100%;height:auto;background:#fff;padding:.5rem;
+  border-radius:2px}
+.diagrama figcaption{font-size:.72rem;color:var(--suave);margin-top:.4rem;
+  text-align:left}
+.diagrama figcaption::before{content:"+-- ";color:var(--suave)}
+.tabela{margin:1.3rem 0;padding:0;overflow-x:auto}
+.tabela table{width:100%;border-collapse:collapse;font-size:.8rem}
+.tabela th{font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;
+  text-align:left;color:var(--suave);font-weight:700;
+  border-bottom:1px solid var(--tinta);padding:.3rem .45rem}
+.tabela td{border-bottom:1px dotted var(--regua);padding:.32rem .45rem;
+  vertical-align:top}
+.tabela tr:last-child td{border-bottom:1px solid var(--tinta)}
+.tabela figcaption{font-size:.72rem;color:var(--suave);margin-top:.35rem}
+.tabela code{font-size:.95em}
+
+/* ---------- navegacao ---------- */
+.barra{position:fixed;top:0;right:0;z-index:20;display:flex;
+  padding:.5rem .7rem}
+.barra button{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;
+  color:var(--suave);background:var(--papel);border:1px solid var(--regua);
+  padding:.22rem .45rem;cursor:pointer;border-radius:2px}
+.barra button + button,.barra a + button{margin-left:.35rem}
+.barra button:hover{color:var(--verde-txt);border-color:var(--verde)}
+.lateral{display:none}
+@media(min-width:1400px){
+  .lateral{display:block;position:fixed;top:0;left:0;width:14rem;height:100vh;
+    overflow-y:auto;padding:2rem .9rem;border-right:1px solid var(--regua);
+    font-size:.72rem}
+  .lateral ol{list-style:none;margin:0;padding:0}
+  .lateral a{display:block;color:var(--suave);border:0;padding:.12rem 0}
+  .lateral a:hover,.lateral a.ativo{color:var(--verde-txt)}
+  .lateral .lat-tit{font-size:.6rem;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--vermelho);margin:1rem 0 .35rem}
+  .lateral .lat-inicio{margin:0 0 .7rem;padding-bottom:.5rem;
+    border-bottom:1px solid var(--regua)}
+  .lateral .lat-inicio a{color:var(--verde-txt)}
+  .lateral .lat-n{margin-right:.4rem;color:var(--regua)}
+}
+.colofao{margin:4.5rem 0 0;padding-top:1rem;
+  border-top:3px double var(--regua);font-size:.72rem;color:var(--suave)}
+:focus-visible{outline:2px solid var(--verde);outline-offset:2px}
+
+/* ---------- impressao ---------- */
+@media print{
+  @page{size:A4;margin:18mm 16mm}
+  html{font-size:11pt}
+  body{background:#fff}
+  .barra,.lateral,.copiar{display:none !important}
+  .folha,.capa{max-width:100%;padding:0}
+  .capa{height:23.5cm;padding:0;break-after:page;page-break-after:always}
+  .capa pre{font-size:8.5pt;color:var(--tinta)}
+  .sumario{break-after:page;page-break-after:always}
+  .parte{break-before:page;page-break-before:always}
+  .secao{break-before:page;page-break-before:always}
+  .secao h2,h3{break-after:avoid;page-break-after:avoid}
+  .codigo,.callout,.experimentos,.tabela,.figura{
+    break-inside:avoid;page-break-inside:avoid}
+  .blackbox,.saida,.figura{-webkit-print-color-adjust:exact;
+    print-color-adjust:exact}
+  a{color:inherit;border:0}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media(max-width:640px){
+  html{font-size:14px}
+  .blackbox pre,.saida pre{font-size:.75rem}
+  .barra{position:static;justify-content:flex-end}
+  .secao h2{flex-wrap:wrap;gap:.5rem}
+}
+
+/* ---------- pagina de entrada ---------- */
+/* a capa aqui nao ocupa a tela inteira: os quatro cartoes precisam
+   aparecer sem rolagem */
+.capa{display:block;height:auto;min-height:0;padding:1.3rem 1.3rem .1rem}
+.capa-centro{display:block;text-align:center}
+.capa pre{font-size:clamp(.44rem,2.1vw,.78rem)}
+.abertura-idx{color:var(--suave);margin:0 0 1rem;font-size:.86rem}
+.estatistica{display:flex;flex-wrap:wrap;gap:0;margin:0 0 1.3rem;
+  font-size:.78rem;color:var(--suave)}
+.estatistica span{margin-right:1.6rem}
+.estatistica b{color:var(--verde-txt)}
+.cartoes{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin:0 0 2rem}
+@media(max-width:640px){.cartoes{grid-template-columns:1fr}}
+.cartao{display:block;padding:.85rem .95rem;border:1px solid var(--regua);
+  border-left:3px solid var(--verde);border-radius:2px;color:var(--tinta);
+  background:var(--papel2);text-decoration:none}
+.cartao:hover{border-color:var(--verde);border-left-color:var(--vermelho)}
+.cartao-rot{display:block;font-size:.64rem;letter-spacing:.22em;
+  color:var(--vermelho)}
+.cartao-tit{display:block;font-size:.98rem;font-weight:700;margin:.15rem 0 .3rem}
+.cartao-desc{display:block;font-size:.8rem;color:var(--suave);line-height:1.55}
+.cartao-num{display:block;font-size:.72rem;color:var(--verde-txt);
+  margin-top:.45rem}
+.cartao-est{display:block;font-size:.68rem;color:var(--suave);margin-top:.1rem}
+.busca-cx{margin:0 0 1.4rem}
+.busca-cx input{width:100%;font-family:var(--mono);font-size:.86rem;
+  padding:.5rem .7rem;color:var(--tinta);background:var(--papel);
+  border:1px solid var(--regua);border-left:3px solid var(--verde);
+  border-radius:2px}
+.busca-cx input:focus{outline:none;border-color:var(--verde)}
+.busca-ajuda{display:block;font-size:.68rem;color:var(--suave);margin-top:.3rem}
+.vol{margin:2.4rem 0}
+.vol h2{display:block;font-size:.92rem;letter-spacing:.1em;
+  text-transform:uppercase;margin:0 0 .5rem;padding:0;border:0}
+.vol h2::before,.vol h2::after{content:"================================================================================================";
+  display:block;overflow:hidden;white-space:nowrap;letter-spacing:0;
+  font-weight:400;color:var(--tinta);font-size:.9rem;line-height:1.1}
+.vol h2::before{margin-bottom:.35rem}
+.vol h2::after{margin-top:.35rem}
+.vol-n{color:var(--verde-txt);margin-right:.85rem}
+.vol-pref{font-size:.76rem;margin:0 0 .8rem}
+.bloco{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--vermelho);margin:1.1rem 0 .35rem}
+.bloco a{color:inherit;border:0}
+.sec{margin:0}
+.sec-lin{display:flex;align-items:baseline;color:var(--tinta);border:0;
+  padding:.1rem 0;font-size:.86rem}
+.sec-n{color:var(--verde-txt);min-width:1.9rem;margin-right:.5rem}
+.sec-t{margin-right:.5rem}
+.sec-l{flex:1;border-bottom:1px dotted var(--regua);
+  transform:translateY(-.22rem);margin-right:.5rem}
+.sec-c{font-size:.68rem;color:var(--suave);min-width:1.6rem;text-align:right}
+.sec-lin:hover .sec-t{color:var(--verde-txt)}
+.codigos{list-style:none;margin:.1rem 0 .4rem 2.4rem;padding:0;display:none}
+.codigos li{font-size:.74rem;line-height:1.6}
+.codigos a{color:var(--suave);border:0}
+.codigos a:hover{color:var(--verde-txt)}
+.c-n{color:var(--verde-txt);margin-right:.5rem}
+body.expandido .codigos,.sec.achou .codigos{display:block}
+.sec.oculto,.bloco.oculto,.vol.oculto{display:none}
+.vazio{color:var(--vermelho);font-size:.84rem;display:none}
+.rodape-idx{margin:3rem 0 0;padding-top:1rem;
+  border-top:3px double var(--regua);font-size:.74rem;color:var(--suave)}
+@media print{
+  .busca-cx,.barra{display:none !important}
+  /* o indice nao e um livro: nada de quebra de pagina por secao */
+  .capa{height:auto;break-after:auto;page-break-after:auto}
+  .vol,.sec,.parte,.secao{break-before:auto;page-break-before:auto}
+  .sumario{break-after:auto;page-break-after:auto}
+  .codigos{display:block}
+}
+</style>
+</head>
+<body>
+<div class="barra">
+  <button id="btn-topo" type="button">início</button>
+  <button id="btn-exp" type="button">expandir</button>
+  <button id="btn-tema" type="button">escuro</button>
+</div>
+
+<header class="capa"><div class="capa-centro"><pre>+----------------------------------------------------------------+
+|                     <span class="capa-tit">MANUAL DE EXPERIMENTOS</span>                     |
+|                        <span class="capa-sub">LINGUAGEM PYTHON</span>                        |
+|                                                                |
+|     Ramon Mayor Martins, Ph.D.  ·  IFSC · Câmpus São José      |
+|           <span class="capa-link">@rmayormartins  ·  rmayormartins.github.io</span>           |
+|                                                                |
+|                  <span class="capa-ver">Versão 2026/2  ·  4 volumes</span>                   |
++----------------------------------------------------------------+</pre></div></header>
+
+<main class="folha">
+  <p class="abertura-idx">Quatro volumes de roteiros de laboratório em
+  Python. Cada exemplo foi executado de verdade e a saída impressa é a que
+  o interpretador produziu.</p>
+
+  <p class="estatistica">
+    <span><b>4</b> volumes</span>
+    <span><b>60</b> seções</span>
+    <span><b>372</b> códigos</span>
+    <span><b>44</b> figuras</span>
+    <span><b>40</b> tabelas</span>
+  </p>
+
+  <div class="cartoes"><a class="cartao" href="manual-python-parte-1.html"><span class="cartao-rot">PARTE I</span><span class="cartao-tit">A linguagem</span><span class="cartao-desc">Do primeiro print à orientação a objetos: tipos, controle de fluxo, coleções, funções, módulos, arquivos e exceções.</span><span class="cartao-num">seções 1 a 16 + A, B, C, D</span><span class="cartao-est">20 seções · 162 códigos · 0 figuras · 19 tabelas</span></a>
+<a class="cartao" href="manual-python-parte-2.html"><span class="cartao-rot">PARTE II</span><span class="cartao-tit">Pacotes científicos</span><span class="cartao-desc">math, random e statistics, NumPy, Matplotlib e pandas: cálculo, gráfico, estatística e um relatório completo.</span><span class="cartao-num">seções 17 a 24 + E</span><span class="cartao-est">9 seções · 59 códigos · 12 figuras · 4 tabelas</span></a>
+<a class="cartao" href="manual-python-parte-3.html"><span class="cartao-rot">PARTE III</span><span class="cartao-tit">Aprendizado de máquina</span><span class="cartao-desc">As seis etapas do processo, dos requisitos à exportação, com scikit-learn, Keras, TensorFlow e PyTorch.</span><span class="cartao-num">seções 25 a 44 + F</span><span class="cartao-est">21 seções · 109 códigos · 27 figuras · 9 tabelas</span></a>
+<a class="cartao" href="manual-python-parte-4.html"><span class="cartao-rot">PARTE IV</span><span class="cartao-tit">IA generativa</span><span class="cartao-desc">Tokenização, embeddings, atenção e transformers, VAE, GAN, difusão, LLM, RAG e LoRA.</span><span class="cartao-num">seções 45 a 53 + G</span><span class="cartao-est">10 seções · 42 códigos · 5 figuras · 8 tabelas</span></a></div>
+
+  <div class="busca-cx">
+    <input id="busca" type="search" autocomplete="off"
+      placeholder="buscar por assunto ou exemplo: fft, dicionario, rag, antena...">
+    <span class="busca-ajuda">busca no título das seções e dos 372 exemplos, com ou sem
+    acento &nbsp;·&nbsp; Esc limpa &nbsp;·&nbsp;
+    <span id="contador"></span></span>
+  </div>
+
+  <p class="vazio" id="vazio">nenhuma seção encontrada</p>
+
+  <section class="vol" id="vol-I">
+<h2><span class="vol-n">PARTE I</span><span class="vol-t">A linguagem</span></h2>
+<p class="vol-pref"><a href="manual-python-parte-1.html#como-usar">&gt;&gt; abrir o volume e ler a apresentação</a></p>
+<p class="bloco"><a href="manual-python-parte-1.html#parte-primeiros-passos">|| bloco I &nbsp; Primeiros passos</a></p>
+<div class="sec" data-busca="estrutura fundamental 1.1 primeiro programa 1.2 comentarios e docstrings 1.3 a indentacao define o bloco 1.4 erro de indentacao (proposital) 1.5 linhas longas e continuacao "><a class="sec-lin" href="manual-python-parte-1.html#sec-1-estrutura-fundamental"><span class="sec-n">1</span><span class="sec-t">Estrutura fundamental</span><span class="sec-l"></span><span class="sec-c">5</span></a><ul class="codigos"><li><a href="manual-python-parte-1.html#cod-1-1"><span class="c-n">1.1</span>Primeiro programa</a></li><li><a href="manual-python-parte-1.html#cod-1-2"><span class="c-n">1.2</span>Comentários e docstrings</a></li><li><a href="manual-python-parte-1.html#cod-1-3"><span class="c-n">1.3</span>A indentação define o bloco</a></li><li><a href="manual-python-parte-1.html#cod-1-4"><span class="c-n">1.4</span>Erro de indentação (proposital)</a></li><li><a href="manual-python-parte-1.html#cod-1-5"><span class="c-n">1.5</span>Linhas longas e continuação</a></li></ul></div>
+<div class="sec" data-busca="entrada e saida de dados 2.1 print() com varios argumentos 2.2 print() com sep e end 2.3 input() le sempre uma string 2.4 convertendo a entrada 2.5 f-strings (recomendado) 2.6 controle fino dentro da f-string 2.7 metodo .format() 2.8 operador % (estilo classico) 2.9 programa integrador: media de duas notas "><a class="sec-lin" href="manual-python-parte-1.html#sec-2-entrada-e-saida-de-dados"><span class="sec-n">2</span><span class="sec-t">Entrada e saída de dados</span><span class="sec-l"></span><span class="sec-c">9</span></a><ul class="codigos"><li><a href="manual-python-parte-1.html#cod-2-1"><span class="c-n">2.1</span>print() com vários argumentos</a></li><li><a href="manual-python-parte-1.html#cod-2-2"><span class="c-n">2.2</span>print() com sep e end</a></li><li><a href="manual-python-parte-1.html#cod-2-3"><span class="c-n">2.3</span>input() lê sempre uma string</a></li><li><a href="manual-python-parte-1.html#cod-2-4"><span class="c-n">2.4</span>Convertendo a entrada</a></li><li><a href="manual-python-parte-1.html#cod-2-5"><span class="c-n">2.5</span>f-strings (recomendado)</a></li><li><a href="manual-python-parte-1.html#cod-2-6"><span class="c-n">2.6</span>Controle fino dentro da f-string</a></li><li><a href="manual-python-parte-1.html#cod-2-7"><span class="c-n">2.7</span>Método .format()</a></li><li><a href="manual-python-parte-1.html#cod-2-8"><span class="c-n">2.8</span>Operador % (estilo clássico)</a></li><li><a href="manual-python-parte-1.html#cod-2-9"><span class="c-n">2.9</span>Programa integrador: média de duas notas</a></li></ul></div>
+<div class="sec" data-busca="tipos de dados e variaveis 3.1 os quatro tipos primitivos 3.2 atribuicao multipla e troca de valores 3.3 operadores aritmeticos 3.4 atribuicao composta e funcoes numericas 3.5 comparando floats com seguranca 3.6 conversao entre tipos 3.7 booleanos, and, or e not 3.8 valores considerados falsos 3.9 type() e isinstance() 3.10 none e constantes funcao operador valor variavel"><a class="sec-lin" href="manual-python-parte-1.html#sec-3-tipos-de-dados-e-variaveis"><span class="sec-n">3</span><span class="sec-t">Tipos de dados e variáveis</span><span class="sec-l"></span><span class="sec-c">10</span></a><ul class="codigos"><li><a href="manual-python-parte-1.html#cod-3-1"><span class="c-n">3.1</span>Os quatro tipos primitivos</a></li><li><a href="manual-python-parte-1.html#cod-3-2"><span class="c-n">3.2</span>Atribuição múltipla e troca de valores</a></li><li><a href="manual-python-parte-1.html#cod-3-3"><span class="c-n">3.3</span>Operadores aritméticos</a></li><li><a href="manual-python-parte-1.html#cod-3-4"><span class="c-n">3.4</span>Atribuição composta e funções numéricas</a></li><li><a href="manual-python-parte-1.html#cod-3-5"><span class="c-n">3.5</span>Comparando floats com segurança</a></li><li><a href="manual-python-parte-1.html#cod-3-6"><span class="c-n">3.6</span>Conversão entre tipos</a></li><li><a href="manual-python-parte-1.html#cod-3-7"><span class="c-n">3.7</span>Booleanos, and, or e not</a></li><li><a href="manual-python-parte-1.html#cod-3-8"><span class="c-n">3.8</span>Valores considerados falsos</a></li><li><a href="manual-python-parte-1.html#cod-3-9"><span class="c-n">3.9</span>type() e isinstance()</a></li><li><a href="manual-python-parte-1.html#cod-3-10"><span class="c-n">3.10</span>None e constantes</a></li></ul></div>
+<p class="bloco"><a href="manual-python-parte-1.html#parte-controle-de-fluxo">|| bloco II &nbsp; Controle de fluxo</a></p>
+<div class="sec" data-busca="estruturas de decisao 4.1 if simples 4.2 if e else 4.3 if, elif e else 4.4 decisoes aninhadas 4.5 operadores logicos 4.6 comparacoes encadeadas 4.7 in e not in 4.8 operador ternario 4.9 match/case (python 3.10+) 4.10 menu com condicionais 4.11 validando o que foi digitado comparacao condicional decisao operador"><a class="sec-lin" href="manual-python-parte-1.html#sec-4-estruturas-de-decisao"><span class="sec-n">4</span><span class="sec-t">Estruturas de decisão</span><span class="sec-l"></span><span class="sec-c">11</span></a><ul class="codigos"><li><a href="manual-python-parte-1.html#cod-4-1"><span class="c-n">4.1</span>if simples</a></li><li><a href="manual-python-parte-1.html#cod-4-2"><span class="c-n">4.2</span>if e else</a></li><li><a href="manual-python-parte-1.html#cod-4-3"><span class="c-n">4.3</span>if, elif e else</a></li><li><a href="manual-python-parte-1.html#cod-4-4"><span class="c-n">4.4</span>Decisões aninhadas</a></li><li><a href="manual-python-parte-1.html#cod-4-5"><span class="c-n">4.5</span>Operadores lógicos</a></li><li><a href="manual-python-parte-1.html#cod-4-6"><span class="c-n">4.6</span>Comparações encadeadas</a></li><li><a href="manual-python-parte-1.html#cod-4-7"><span class="c-n">4.7</span>in e not in</a></li><li><a href="manual-python-parte-1.html#cod-4-8"><span class="c-n">4.8</span>Operador ternário</a></li><li><a href="manual-python-parte-1.html#cod-4-9"><span class="c-n">4.9</span>match/case (Python 3.10+)</a></li><li><a href="manual-python-parte-1.html#cod-4-10"><span class="c-n">4.10</span>Menu com condicionais</a></li><li><a href="manual-python-parte-1.html#cod-4-11"><span class="c-n">4.11</span>Validando o que foi digitado</a></li></ul></div>
+<div class="sec" data-busca="estruturas de repeticao 5.1 for com range() 5.2 range com inicio, fim e passo 5.3 percorrendo uma lista 5.4 percorrendo texto e contando 5.5 enumerate(): indice e valor 5.6 zip(): duas listas ao mesmo tempo 5.7 while basico 5.8 while com acumulador 5.9 break: interrompendo o laco 5.10 continue: pulando uma volta 5.11 for com else 5.12 laco controlado por menu 5.13 lacos aninhados: tabuada 5.14 validacao robusta de entrada "><a class="sec-lin" href="manual-python-parte-1.html#sec-5-estruturas-de-repeticao"><span class="sec-n">5</span><span class="sec-t">Estruturas de repetição</span><span class="sec-l"></span><span class="sec-c">14</span></a><ul class="codigos"><li><a href="manual-python-parte-1.html#cod-5-1"><span class="c-n">5.1</span>for com range()</a></li><li><a href="manual-python-parte-1.html#cod-5-2"><span class="c-n">5.2</span>range com início, fim e passo</a></li><li><a href="manual-python-parte-1.html#cod-5-3"><span class="c-n">5.3</span>Percorrendo uma lista</a></li><li><a href="manual-python-parte-1.html#cod-5-4"><span class="c-n">5.4</span>Percorrendo texto e contando</a></li><li><a href="manual-python-parte-1.html#cod-5-5"><span class="c-n">5.5</span>enumerate(): índice e valor</a></li><li><a href="manual-python-parte-1.html#cod-5-6"><span class="c-n">5.6</span>zip(): duas listas ao mesmo tempo</a></li><li><a href="manual-python-parte-1.html#cod-5-7"><span class="c-n">5.7</span>while básico</a></li><li><a href="manual-python-parte-1.html#cod-5-8"><span class="c-n">5.8</span>while com acumulador</a></li><li><a href="manual-python-parte-1.html#cod-5-9"><span class="c-n">5.9</span>break: interrompendo o laço</a></li><li><a href="manual-python-parte-1.html#cod-5-10"><span class="c-n">5.10</span>continue: pulando uma volta</a></li><li><a href="manual-python-parte-1.html#cod-5-11"><span class="c-n">5.11</span>for com else</a></li><li><a href="manual-python-parte-1.html#cod-5-12"><span class="c-n">5.12</span>Laço controlado por menu</a></li><li><a href="manual-python-parte-1.html#cod-5-13"><span class="c-n">5.13</span>Laços aninhados: tabuada</a></li><li><a href="manual-python-parte-1.html#cod-5-14"><span class="c-n">5.14</span>Validação robusta de entrada</a></li></ul></div>
+<p class="bloco"><a href="manual-python-parte-1.html#parte-colecoes-e-texto">|| bloco III &nbsp; Coleções e texto</a></p>
+<div class="sec" data-busca="estruturas de dados 6.1 criando e acessando 6.2 adicionando e removendo 6.3 informacoes e busca 6.4 ordenando 6.5 fatiamento (slicing) 6.6 copia de listas: a armadilha da referencia 6.7 listas de listas (matriz) 6.8 criando tuplas 6.9 imutabilidade na pratica 6.10 desempacotamento 6.11 criando e acessando 6.12 modificando 6.13 percorrendo 6.14 contando ocorrencias com dicionario 6.15 dicionarios aninhados 6.16 criando e eliminando repetidos 6.17 adicionando e removendo 6.18 operacoes de conjunto 6.19 verificacoes entre conjuntos 6.20 lista como pilha, deque como fila 6.21 escolhendo a estrutura certa informacao operacao verificacao"><a class="sec-lin" href="manual-python-parte-1.html#sec-6-estruturas-de-dados"><span class="sec-n">6</span><span class="sec-t">Estruturas de dados</span><span class="sec-l"></span><span class="sec-c">21</span></a><ul class="codigos"><li><a href="manual-python-parte-1.html#cod-6-1"><span class="c-n">6.1</span>Criando e acessando</a></li><li><a href="manual-python-parte-1.html#cod-6-2"><span class="c-n">6.2</span>Adicionando e removendo</a></li><li><a href="manual-python-parte-1.html#cod-6-3"><span class="c-n">6.3</span>Informações e busca</a></li><li><a href="manual-python-parte-1.html#cod-6-4"><span class="c-n">6.4</span>Ordenando</a></li><li><a href="manual-python-parte-1.html#cod-6-5"><span class="c-n">6.5</span>Fatiamento (slicing)</a></li><li><a href="manual-python-parte-1.html#cod-6-6"><span class="c-n">6.6</span>Cópia de listas: a armadilha da referência</a></li><li><a href="manual-python-parte-1.html#cod-6-7"><span class="c-n">6.7</span>Listas de listas (matriz)</a></li><li><a href="manual-python-parte-1.html#cod-6-8"><span class="c-n">6.8</span>Criando tuplas</a></li><li><a href="manual-python-parte-1.html#cod-6-9"><span class="c-n">6.9</span>Imutabilidade na prática</a></li><li><a href="manual-python-parte-1.html#cod-6-10"><span class="c-n">6.10</span>Desempacotamento</a></li><li><a href="manual-python-parte-1.html#cod-6-11"><span class="c-n">6.11</span>Criando e acessando</a></li><li><a href="manual-python-parte-1.html#cod-6-12"><span class="c-n">6.12</span>Modificando</a></li><li><a href="manual-python-parte-1.html#cod-6-13"><span class="c-n">6.13</span>Percorrendo</a></li><li><a href="manual-python-parte-1.html#cod-6-14"><span class="c-n">6.14</span>Contando ocorrências com dicionário</a></li><li><a href="manual-python-parte-1.html#cod-6-15"><span class="c-n">6.15</span>Dicionários aninhados</a></li><li><a href="manual-python-parte-1.html#cod-6-16"><span class="c-n">6.16</span>Criando e eliminando repetidos</a></li><li><a href="manual-python-parte-1.html#cod-6-17"><span class="c-n">6.17</span>Adicionando e removendo</a></li><li><a href="manual-python-parte-1.html#cod-6-18"><span class="c-n">6.18</span>Operações de conjunto</a></li><li><a href="manual-python-parte-1.html#cod-6-19"><span class="c-n">6.19</span>Verificações entre conjuntos</a></li><li><a href="manual-python-parte-1.html#cod-6-20"><span class="c-n">6.20</span>Lista como pilha, deque como fila</a></li><li><a href="manual-python-parte-1.html#cod-6-21"><span class="c-n">6.21</span>Escolhendo a estrutura certa</a></li></ul></div>
+<div class="sec" data-busca="compreensoes 7.1 da repeticao para a compreensao 7.2 compreensao com filtro 7.3 compreensao com if/else 7.4 compreensao aninhada 7.5 compreensao de dicionario 7.6 compreensao de conjunto 7.7 expressao geradora 7.8 quando nao usar compreensao"><a class="sec-lin" href="manual-python-parte-1.html#sec-7-compreensoes"><span class="sec-n">7</span><span class="sec-t">Compreensões</span><span class="sec-l"></span><span class="sec-c">8</span></a><ul class="codigos"><li><a href="manual-python-parte-1.html#cod-7-1"><span class="c-n">7.1</span>Da repetição para a compreensão</a></li><li><a href="manual-python-parte-1.html#cod-7-2"><span class="c-n">7.2</span>Compreensão com filtro</a></li><li><a href="manual-python-parte-1.html#cod-7-3"><span class="c-n">7.3</span>Compreensão com if/else</a></li><li><a href="manual-python-parte-1.html#cod-7-4"><span class="c-n">7.4</span>Compreensão aninhada</a></li><li><a href="manual-python-parte-1.html#cod-7-5"><span class="c-n">7.5</span>Compreensão de dicionário</a></li><li><a href="manual-python-parte-1.html#cod-7-6"><span class="c-n">7.6</span>Compreensão de conjunto</a></li><li><a href="manual-python-parte-1.html#cod-7-7"><span class="c-n">7.7</span>Expressão geradora</a></li><li><a href="manual-python-parte-1.html#cod-7-8"><span class="c-n">7.8</span>Quando não usar</a></li></ul></div>
+<div class="sec" data-busca="strings 8.1 criando strings 8.2 indexacao e tamanho 8.3 fatiamento 8.4 imutabilidade 8.5 caixa e limpeza 8.6 metodos de verificacao 8.7 busca dentro do texto 8.8 substituicao e remocao 8.9 split() e join() 8.10 alinhando colunas 8.11 preenchimento e centralizacao 8.12 sequencias de escape e raw strings 8.13 extraindo partes de um endereco 8.14 validando um endereco de email 8.15 analisando um texto "><a class="sec-lin" href="manual-python-parte-1.html#sec-8-strings"><span class="sec-n">8</span><span class="sec-t">Strings</span><span class="sec-l"></span><span class="sec-c">15</span></a><ul class="codigos"><li><a href="manual-python-parte-1.html#cod-8-1"><span class="c-n">8.1</span>Criando strings</a></li><li><a href="manual-python-parte-1.html#cod-8-2"><span class="c-n">8.2</span>Indexação e tamanho</a></li><li><a href="manual-python-parte-1.html#cod-8-3"><span class="c-n">8.3</span>Fatiamento</a></li><li><a href="manual-python-parte-1.html#cod-8-4"><span class="c-n">8.4</span>Imutabilidade</a></li><li><a href="manual-python-parte-1.html#cod-8-5"><span class="c-n">8.5</span>Caixa e limpeza</a></li><li><a href="manual-python-parte-1.html#cod-8-6"><span class="c-n">8.6</span>Métodos de verificação</a></li><li><a href="manual-python-parte-1.html#cod-8-7"><span class="c-n">8.7</span>Busca dentro do texto</a></li><li><a href="manual-python-parte-1.html#cod-8-8"><span class="c-n">8.8</span>Substituição e remoção</a></li><li><a href="manual-python-parte-1.html#cod-8-9"><span class="c-n">8.9</span>split() e join()</a></li><li><a href="manual-python-parte-1.html#cod-8-10"><span class="c-n">8.10</span>Alinhando colunas</a></li><li><a href="manual-python-parte-1.html#cod-8-11"><span class="c-n">8.11</span>Preenchimento e centralização</a></li><li><a href="manual-python-parte-1.html#cod-8-12"><span class="c-n">8.12</span>Sequências de escape e raw strings</a></li><li><a href="manual-python-parte-1.html#cod-8-13"><span class="c-n">8.13</span>Extraindo partes de um endereço</a></li><li><a href="manual-python-parte-1.html#cod-8-14"><span class="c-n">8.14</span>Validando um endereço de email</a></li><li><a href="manual-python-parte-1.html#cod-8-15"><span class="c-n">8.15</span>Analisando um texto</a></li></ul></div>
+<p class="bloco"><a href="manual-python-parte-1.html#parte-organizacao-do-codigo">|| bloco IV &nbsp; Organização do código</a></p>
+<div class="sec" data-busca="funcoes 9.1 funcao sem parametros 9.2 funcao com parametros 9.3 retornando um valor 9.4 varios valores de retorno 9.5 retorno condicional e saida antecipada 9.6 valores padrao 9.7 *args: quantidade variavel de argumentos 9.8 **kwargs: argumentos nomeados variaveis 9.9 combinando todas as formas 9.10 local e global 9.11 global e nonlocal 9.12 armadilha do parametro padrao mutavel 9.13 lambda e o parametro key 9.14 map, filter e a alternativa com compreensao 9.15 passando funcoes como argumento 9.16 recursao 9.17 documentacao e anotacoes de tipo 9.18 decorador simples anotacao funcao valor variavel"><a class="sec-lin" href="manual-python-parte-1.html#sec-9-funcoes"><span class="sec-n">9</span><span class="sec-t">Funções</span><span class="sec-l"></span><span class="sec-c">18</span></a><ul class="codigos"><li><a href="manual-python-parte-1.html#cod-9-1"><span class="c-n">9.1</span>Função sem parâmetros</a></li><li><a href="manual-python-parte-1.html#cod-9-2"><span class="c-n">9.2</span>Função com parâmetros</a></li><li><a href="manual-python-parte-1.html#cod-9-3"><span class="c-n">9.3</span>Retornando um valor</a></li><li><a href="manual-python-parte-1.html#cod-9-4"><span class="c-n">9.4</span>Vários valores de retorno</a></li><li><a href="manual-python-parte-1.html#cod-9-5"><span class="c-n">9.5</span>Retorno condicional e saída antecipada</a></li><li><a href="manual-python-parte-1.html#cod-9-6"><span class="c-n">9.6</span>Valores padrão</a></li><li><a href="manual-python-parte-1.html#cod-9-7"><span class="c-n">9.7</span>*args: quantidade variável de argumentos</a></li><li><a href="manual-python-parte-1.html#cod-9-8"><span class="c-n">9.8</span>**kwargs: argumentos nomeados variáveis</a></li><li><a href="manual-python-parte-1.html#cod-9-9"><span class="c-n">9.9</span>Combinando todas as formas</a></li><li><a href="manual-python-parte-1.html#cod-9-10"><span class="c-n">9.10</span>Local e global</a></li><li><a href="manual-python-parte-1.html#cod-9-11"><span class="c-n">9.11</span>global e nonlocal</a></li><li><a href="manual-python-parte-1.html#cod-9-12"><span class="c-n">9.12</span>Armadilha do parâmetro padrão mutável</a></li><li><a href="manual-python-parte-1.html#cod-9-13"><span class="c-n">9.13</span>lambda e o parâmetro key</a></li><li><a href="manual-python-parte-1.html#cod-9-14"><span class="c-n">9.14</span>map, filter e a alternativa com compreensão</a></li><li><a href="manual-python-parte-1.html#cod-9-15"><span class="c-n">9.15</span>Passando funções como argumento</a></li><li><a href="manual-python-parte-1.html#cod-9-16"><span class="c-n">9.16</span>Recursão</a></li><li><a href="manual-python-parte-1.html#cod-9-17"><span class="c-n">9.17</span>Documentação e anotações de tipo</a></li><li><a href="manual-python-parte-1.html#cod-9-18"><span class="c-n">9.18</span>Decorador simples</a></li></ul></div>
+<div class="sec" data-busca="modulos e pacotes 10.1 import de modulo inteiro 10.2 from ... import 10.3 apelidos com as 10.4 criando o seu proprio modulo 10.5 o guarda __name__ 10.6 organizacao de um projeto 10.7 ambiente virtual e pip "><a class="sec-lin" href="manual-python-parte-1.html#sec-10-modulos-e-pacotes"><span class="sec-n">10</span><span class="sec-t">Módulos e pacotes</span><span class="sec-l"></span><span class="sec-c">7</span></a><ul class="codigos"><li><a href="manual-python-parte-1.html#cod-10-1"><span class="c-n">10.1</span>import de módulo inteiro</a></li><li><a href="manual-python-parte-1.html#cod-10-2"><span class="c-n">10.2</span>from ... import</a></li><li><a href="manual-python-parte-1.html#cod-10-3"><span class="c-n">10.3</span>Apelidos com as</a></li><li><a href="manual-python-parte-1.html#cod-10-4"><span class="c-n">10.4</span>Criando o seu próprio módulo</a></li><li><a href="manual-python-parte-1.html#cod-10-5"><span class="c-n">10.5</span>O guarda __name__</a></li><li><a href="manual-python-parte-1.html#cod-10-6"><span class="c-n">10.6</span>Organização de um projeto</a></li><li><a href="manual-python-parte-1.html#cod-10-7"><span class="c-n">10.7</span>Ambiente virtual e pip</a></li></ul></div>
+<div class="sec" data-busca="programacao orientada a objetos 11.1 primeira classe 11.2 metodos 11.3 __str__ e __repr__ 11.4 atributo de classe e atributo de instancia 11.5 encapsulamento com property 11.6 heranca 11.7 polimorfismo 11.8 dataclass: menos codigo repetido 11.9 aplicacao: turma com objetos "><a class="sec-lin" href="manual-python-parte-1.html#sec-11-programacao-orientada-a-objetos"><span class="sec-n">11</span><span class="sec-t">Programação orientada a objetos</span><span class="sec-l"></span><span class="sec-c">9</span></a><ul class="codigos"><li><a href="manual-python-parte-1.html#cod-11-1"><span class="c-n">11.1</span>Primeira classe</a></li><li><a href="manual-python-parte-1.html#cod-11-2"><span class="c-n">11.2</span>Métodos</a></li><li><a href="manual-python-parte-1.html#cod-11-3"><span class="c-n">11.3</span>__str__ e __repr__</a></li><li><a href="manual-python-parte-1.html#cod-11-4"><span class="c-n">11.4</span>Atributo de classe e atributo de instância</a></li><li><a href="manual-python-parte-1.html#cod-11-5"><span class="c-n">11.5</span>Encapsulamento com property</a></li><li><a href="manual-python-parte-1.html#cod-11-6"><span class="c-n">11.6</span>Herança</a></li><li><a href="manual-python-parte-1.html#cod-11-7"><span class="c-n">11.7</span>Polimorfismo</a></li><li><a href="manual-python-parte-1.html#cod-11-8"><span class="c-n">11.8</span>dataclass: menos código repetido</a></li><li><a href="manual-python-parte-1.html#cod-11-9"><span class="c-n">11.9</span>Aplicação: turma com objetos</a></li></ul></div>
+<p class="bloco"><a href="manual-python-parte-1.html#parte-dados-robustez-e-pratica">|| bloco V &nbsp; Dados, robustez e prática</a></p>
+<div class="sec" data-busca="manipulacao de arquivos 12.1 escrevendo um arquivo 12.2 lendo de uma vez 12.3 lendo linha a linha 12.4 acrescentando ao final 12.5 with contra abertura manual 12.6 pathlib: caminhos que funcionam em qualquer sistema 12.7 csv: tabelas 12.8 json: estruturas aninhadas 12.9 aplicacao: lista de tarefas persistente "><a class="sec-lin" href="manual-python-parte-1.html#sec-12-manipulacao-de-arquivos"><span class="sec-n">12</span><span class="sec-t">Manipulação de arquivos</span><span class="sec-l"></span><span class="sec-c">9</span></a><ul class="codigos"><li><a href="manual-python-parte-1.html#cod-12-1"><span class="c-n">12.1</span>Escrevendo um arquivo</a></li><li><a href="manual-python-parte-1.html#cod-12-2"><span class="c-n">12.2</span>Lendo de uma vez</a></li><li><a href="manual-python-parte-1.html#cod-12-3"><span class="c-n">12.3</span>Lendo linha a linha</a></li><li><a href="manual-python-parte-1.html#cod-12-4"><span class="c-n">12.4</span>Acrescentando ao final</a></li><li><a href="manual-python-parte-1.html#cod-12-5"><span class="c-n">12.5</span>with contra abertura manual</a></li><li><a href="manual-python-parte-1.html#cod-12-6"><span class="c-n">12.6</span>pathlib: caminhos que funcionam em qualquer sistema</a></li><li><a href="manual-python-parte-1.html#cod-12-7"><span class="c-n">12.7</span>CSV: tabelas</a></li><li><a href="manual-python-parte-1.html#cod-12-8"><span class="c-n">12.8</span>JSON: estruturas aninhadas</a></li><li><a href="manual-python-parte-1.html#cod-12-9"><span class="c-n">12.9</span>Aplicação: lista de tarefas persistente</a></li></ul></div>
+<div class="sec" data-busca="tratamento de excecoes 13.1 try e except 13.2 tratando cada erro de um jeito 13.3 capturando a mensagem e varios tipos juntos 13.4 else e finally 13.5 raise: sinalizando um erro 13.6 excecoes proprias 13.7 leitura de arquivo com tratamento completo 13.8 anatomia da mensagem de erro excecao"><a class="sec-lin" href="manual-python-parte-1.html#sec-13-tratamento-de-excecoes"><span class="sec-n">13</span><span class="sec-t">Tratamento de exceções</span><span class="sec-l"></span><span class="sec-c">8</span></a><ul class="codigos"><li><a href="manual-python-parte-1.html#cod-13-1"><span class="c-n">13.1</span>try e except</a></li><li><a href="manual-python-parte-1.html#cod-13-2"><span class="c-n">13.2</span>Tratando cada erro de um jeito</a></li><li><a href="manual-python-parte-1.html#cod-13-3"><span class="c-n">13.3</span>Capturando a mensagem e vários tipos juntos</a></li><li><a href="manual-python-parte-1.html#cod-13-4"><span class="c-n">13.4</span>else e finally</a></li><li><a href="manual-python-parte-1.html#cod-13-5"><span class="c-n">13.5</span>raise: sinalizando um erro</a></li><li><a href="manual-python-parte-1.html#cod-13-6"><span class="c-n">13.6</span>Exceções próprias</a></li><li><a href="manual-python-parte-1.html#cod-13-7"><span class="c-n">13.7</span>Leitura de arquivo com tratamento completo</a></li><li><a href="manual-python-parte-1.html#cod-13-8"><span class="c-n">13.8</span>Anatomia da mensagem de erro</a></li></ul></div>
+<div class="sec" data-busca="biblioteca padrao essencial 14.1 math: funcoes matematicas 14.2 random: sorteios 14.3 datetime: datas e horas 14.4 statistics: medidas resumo 14.5 collections: counter e defaultdict 14.6 itertools: combinacoes e agrupamentos 14.7 re: expressoes regulares 14.8 os, sys e time collectiom combinacao expressao funcao regular"><a class="sec-lin" href="manual-python-parte-1.html#sec-14-biblioteca-padrao-essencial"><span class="sec-n">14</span><span class="sec-t">Biblioteca padrão essencial</span><span class="sec-l"></span><span class="sec-c">8</span></a><ul class="codigos"><li><a href="manual-python-parte-1.html#cod-14-1"><span class="c-n">14.1</span>math: funções matemáticas</a></li><li><a href="manual-python-parte-1.html#cod-14-2"><span class="c-n">14.2</span>random: sorteios</a></li><li><a href="manual-python-parte-1.html#cod-14-3"><span class="c-n">14.3</span>datetime: datas e horas</a></li><li><a href="manual-python-parte-1.html#cod-14-4"><span class="c-n">14.4</span>statistics: medidas resumo</a></li><li><a href="manual-python-parte-1.html#cod-14-5"><span class="c-n">14.5</span>collections: Counter e defaultdict</a></li><li><a href="manual-python-parte-1.html#cod-14-6"><span class="c-n">14.6</span>itertools: combinações e agrupamentos</a></li><li><a href="manual-python-parte-1.html#cod-14-7"><span class="c-n">14.7</span>re: expressões regulares</a></li><li><a href="manual-python-parte-1.html#cod-14-8"><span class="c-n">14.8</span>os, sys e time</a></li></ul></div>
+<div class="sec" data-busca="estilo, depuracao e testes 15.1 antes e depois 15.2 anotacoes de tipo 15.3 assert para verificar hipoteses 15.4 testes automatizados com unittest 15.5 logging em vez de print anotacao depol hipotes"><a class="sec-lin" href="manual-python-parte-1.html#sec-15-estilo-depuracao-e-testes"><span class="sec-n">15</span><span class="sec-t">Estilo, depuração e testes</span><span class="sec-l"></span><span class="sec-c">5</span></a><ul class="codigos"><li><a href="manual-python-parte-1.html#cod-15-1"><span class="c-n">15.1</span>Antes e depois</a></li><li><a href="manual-python-parte-1.html#cod-15-2"><span class="c-n">15.2</span>Anotações de tipo</a></li><li><a href="manual-python-parte-1.html#cod-15-3"><span class="c-n">15.3</span>assert para verificar hipóteses</a></li><li><a href="manual-python-parte-1.html#cod-15-4"><span class="c-n">15.4</span>Testes automatizados com unittest</a></li><li><a href="manual-python-parte-1.html#cod-15-5"><span class="c-n">15.5</span>logging em vez de print</a></li></ul></div>
+<div class="sec" data-busca="projetos integradores 16.1 jogo da forca 16.2 boletim com persistencia 16.3 analisador de arquivo de log 16.4 agenda de contatos com menu integrador"><a class="sec-lin" href="manual-python-parte-1.html#sec-16-projetos-integradores"><span class="sec-n">16</span><span class="sec-t">Projetos integradores</span><span class="sec-l"></span><span class="sec-c">4</span></a><ul class="codigos"><li><a href="manual-python-parte-1.html#cod-16-1"><span class="c-n">16.1</span>Jogo da forca</a></li><li><a href="manual-python-parte-1.html#cod-16-2"><span class="c-n">16.2</span>Boletim com persistência</a></li><li><a href="manual-python-parte-1.html#cod-16-3"><span class="c-n">16.3</span>Analisador de arquivo de log</a></li><li><a href="manual-python-parte-1.html#cod-16-4"><span class="c-n">16.4</span>Agenda de contatos com menu</a></li></ul></div>
+<p class="bloco"><a href="manual-python-parte-1.html#parte-apendices">|| bloco VI &nbsp; Apêndices</a></p>
+<div class="sec" data-busca="referencia de operadores  operador"><a class="sec-lin" href="manual-python-parte-1.html#sec-a-referencia-de-operadores"><span class="sec-n">A</span><span class="sec-t">Referência de operadores</span><span class="sec-l"></span><span class="sec-c">0</span></a></div>
+<div class="sec" data-busca="metodos essenciais por tipo  essencial"><a class="sec-lin" href="manual-python-parte-1.html#sec-b-metodos-essenciais-por-tipo"><span class="sec-n">B</span><span class="sec-t">Métodos essenciais por tipo</span><span class="sec-l"></span><span class="sec-c">0</span></a></div>
+<div class="sec" data-busca="formatacao de saida  "><a class="sec-lin" href="manual-python-parte-1.html#sec-c-formatacao-de-saida"><span class="sec-n">C</span><span class="sec-t">Formatação de saída</span><span class="sec-l"></span><span class="sec-c">0</span></a></div>
+<div class="sec" data-busca="cartao de consulta rapida d.1 resumo da linguagem "><a class="sec-lin" href="manual-python-parte-1.html#sec-d-cartao-de-consulta-rapida"><span class="sec-n">D</span><span class="sec-t">Cartão de consulta rápida</span><span class="sec-l"></span><span class="sec-c">1</span></a><ul class="codigos"><li><a href="manual-python-parte-1.html#cod-D-1"><span class="c-n">D.1</span>Resumo da linguagem</a></li></ul></div>
+</section>
+<section class="vol" id="vol-II">
+<h2><span class="vol-n">PARTE II</span><span class="vol-t">Pacotes científicos</span></h2>
+<p class="vol-pref"><a href="manual-python-parte-2.html#como-usar-2">&gt;&gt; abrir o volume e ler a apresentação</a></p>
+<p class="bloco"><a href="manual-python-parte-2.html#parte-ferramentas-e-matematica">|| bloco VII &nbsp; Ferramentas e matemática</a></p>
+<div class="sec" data-busca="ambientes, pacotes e imports 17.1 onde o python procura os modulos 17.2 as formas de importar 17.3 um pacote de verdade 17.4 ambiente virtual e instalacao 17.5 conferindo o que esta instalado 17.6 executando modulos com python -m "><a class="sec-lin" href="manual-python-parte-2.html#sec-17-ambientes-pacotes-e-imports"><span class="sec-n">17</span><span class="sec-t">Ambientes, pacotes e imports</span><span class="sec-l"></span><span class="sec-c">6</span></a><ul class="codigos"><li><a href="manual-python-parte-2.html#cod-17-1"><span class="c-n">17.1</span>Onde o Python procura os módulos</a></li><li><a href="manual-python-parte-2.html#cod-17-2"><span class="c-n">17.2</span>As formas de importar</a></li><li><a href="manual-python-parte-2.html#cod-17-3"><span class="c-n">17.3</span>Um pacote de verdade</a></li><li><a href="manual-python-parte-2.html#cod-17-4"><span class="c-n">17.4</span>Ambiente virtual e instalação</a></li><li><a href="manual-python-parte-2.html#cod-17-5"><span class="c-n">17.5</span>Conferindo o que está instalado</a></li><li><a href="manual-python-parte-2.html#cod-17-6"><span class="c-n">17.6</span>Executando módulos com python -m</a></li></ul></div>
+<div class="sec" data-busca="math: matematica aplicada 18.1 constantes e funcoes essenciais 18.2 piso, teto e arredondamento 18.3 trigonometria e angulos 18.4 logaritmos e decibeis 18.5 precisao: decimal e fractions 18.6 numeros complexos e fasores 18.7 aplicacao: equacao do segundo grau 18.8 aplicacao: equacao de friis decibel essencial fasor fractiom funcao"><a class="sec-lin" href="manual-python-parte-2.html#sec-18-math-matematica-aplicada"><span class="sec-n">18</span><span class="sec-t">math: matemática aplicada</span><span class="sec-l"></span><span class="sec-c">8</span></a><ul class="codigos"><li><a href="manual-python-parte-2.html#cod-18-1"><span class="c-n">18.1</span>Constantes e funções essenciais</a></li><li><a href="manual-python-parte-2.html#cod-18-2"><span class="c-n">18.2</span>Piso, teto e arredondamento</a></li><li><a href="manual-python-parte-2.html#cod-18-3"><span class="c-n">18.3</span>Trigonometria e ângulos</a></li><li><a href="manual-python-parte-2.html#cod-18-4"><span class="c-n">18.4</span>Logaritmos e decibéis</a></li><li><a href="manual-python-parte-2.html#cod-18-5"><span class="c-n">18.5</span>Precisão: decimal e fractions</a></li><li><a href="manual-python-parte-2.html#cod-18-6"><span class="c-n">18.6</span>Números complexos e fasores</a></li><li><a href="manual-python-parte-2.html#cod-18-7"><span class="c-n">18.7</span>Aplicação: equação do segundo grau</a></li><li><a href="manual-python-parte-2.html#cod-18-8"><span class="c-n">18.8</span>Aplicação: equação de Friis</a></li></ul></div>
+<div class="sec" data-busca="random: sorteio e simulacao 19.1 funcoes basicas 19.2 amostragem de colecoes 19.3 distribuicoes continuas 19.4 monte carlo: estimando pi 19.5 simulacao: taxa de erro de bit 19.6 histograma em texto colecao distribuicao funcao"><a class="sec-lin" href="manual-python-parte-2.html#sec-19-random-sorteio-e-simulacao"><span class="sec-n">19</span><span class="sec-t">random: sorteio e simulação</span><span class="sec-l"></span><span class="sec-c">6</span></a><ul class="codigos"><li><a href="manual-python-parte-2.html#cod-19-1"><span class="c-n">19.1</span>Funções básicas</a></li><li><a href="manual-python-parte-2.html#cod-19-2"><span class="c-n">19.2</span>Amostragem de coleções</a></li><li><a href="manual-python-parte-2.html#cod-19-3"><span class="c-n">19.3</span>Distribuições contínuas</a></li><li><a href="manual-python-parte-2.html#cod-19-4"><span class="c-n">19.4</span>Monte Carlo: estimando pi</a></li><li><a href="manual-python-parte-2.html#cod-19-5"><span class="c-n">19.5</span>Simulação: taxa de erro de bit</a></li><li><a href="manual-python-parte-2.html#cod-19-6"><span class="c-n">19.6</span>Histograma em texto</a></li></ul></div>
+<div class="sec" data-busca="statistics: estatistica descritiva 20.1 medidas de posicao 20.2 medidas de dispersao 20.3 quantis e resumo dos cinco numeros 20.4 correlacao e regressao linear 20.5 distribuicao normal 20.6 relatorio estatistico completo "><a class="sec-lin" href="manual-python-parte-2.html#sec-20-statistics-estatistica-descritiva"><span class="sec-n">20</span><span class="sec-t">statistics: estatística descritiva</span><span class="sec-l"></span><span class="sec-c">6</span></a><ul class="codigos"><li><a href="manual-python-parte-2.html#cod-20-1"><span class="c-n">20.1</span>Medidas de posição</a></li><li><a href="manual-python-parte-2.html#cod-20-2"><span class="c-n">20.2</span>Medidas de dispersão</a></li><li><a href="manual-python-parte-2.html#cod-20-3"><span class="c-n">20.3</span>Quantis e resumo dos cinco números</a></li><li><a href="manual-python-parte-2.html#cod-20-4"><span class="c-n">20.4</span>Correlação e regressão linear</a></li><li><a href="manual-python-parte-2.html#cod-20-5"><span class="c-n">20.5</span>Distribuição normal</a></li><li><a href="manual-python-parte-2.html#cod-20-6"><span class="c-n">20.6</span>Relatório estatístico completo</a></li></ul></div>
+<p class="bloco"><a href="manual-python-parte-2.html#parte-computacao-numerica-e-graficos">|| bloco VIII &nbsp; Computação numérica e gráficos</a></p>
+<div class="sec" data-busca="numpy: computacao vetorial 21.1 criando arrays 21.2 atributos e tipos 21.3 vetorizacao contra laco 21.4 indexacao, fatiamento e mascaras 21.5 broadcasting 21.6 agregacoes e o parametro axis 21.7 matrizes e algebra linear 21.8 gerando sinais 21.9 espectro com fft 21.10 salvando e carregando dados agregacao matriz sinal"><a class="sec-lin" href="manual-python-parte-2.html#sec-21-numpy-computacao-vetorial"><span class="sec-n">21</span><span class="sec-t">NumPy: computação vetorial</span><span class="sec-l"></span><span class="sec-c">10</span></a><ul class="codigos"><li><a href="manual-python-parte-2.html#cod-21-1"><span class="c-n">21.1</span>Criando arrays</a></li><li><a href="manual-python-parte-2.html#cod-21-2"><span class="c-n">21.2</span>Atributos e tipos</a></li><li><a href="manual-python-parte-2.html#cod-21-3"><span class="c-n">21.3</span>Vetorização contra laço</a></li><li><a href="manual-python-parte-2.html#cod-21-4"><span class="c-n">21.4</span>Indexação, fatiamento e máscaras</a></li><li><a href="manual-python-parte-2.html#cod-21-5"><span class="c-n">21.5</span>Broadcasting</a></li><li><a href="manual-python-parte-2.html#cod-21-6"><span class="c-n">21.6</span>Agregações e o parâmetro axis</a></li><li><a href="manual-python-parte-2.html#cod-21-7"><span class="c-n">21.7</span>Matrizes e álgebra linear</a></li><li><a href="manual-python-parte-2.html#cod-21-8"><span class="c-n">21.8</span>Gerando sinais</a></li><li><a href="manual-python-parte-2.html#cod-21-9"><span class="c-n">21.9</span>Espectro com FFT</a></li><li><a href="manual-python-parte-2.html#cod-21-10"><span class="c-n">21.10</span>Salvando e carregando dados</a></li></ul></div>
+<div class="sec" data-busca="matplotlib: graficos 22.1 primeiro grafico 22.2 rotulos, grade e legenda 22.3 varias curvas e estilos de linha 22.4 dispersao com reta de ajuste 22.5 grafico de barras 22.6 histograma 22.7 varios paineis com subplots 22.8 escala logaritmica 22.9 sinal e espectro lado a lado 22.10 salvando para o relatorio painel"><a class="sec-lin" href="manual-python-parte-2.html#sec-22-matplotlib-graficos"><span class="sec-n">22</span><span class="sec-t">Matplotlib: gráficos</span><span class="sec-l"></span><span class="sec-c">10</span></a><ul class="codigos"><li><a href="manual-python-parte-2.html#cod-22-1"><span class="c-n">22.1</span>Primeiro gráfico</a></li><li><a href="manual-python-parte-2.html#cod-22-2"><span class="c-n">22.2</span>Rótulos, grade e legenda</a></li><li><a href="manual-python-parte-2.html#cod-22-3"><span class="c-n">22.3</span>Várias curvas e estilos de linha</a></li><li><a href="manual-python-parte-2.html#cod-22-4"><span class="c-n">22.4</span>Dispersão com reta de ajuste</a></li><li><a href="manual-python-parte-2.html#cod-22-5"><span class="c-n">22.5</span>Gráfico de barras</a></li><li><a href="manual-python-parte-2.html#cod-22-6"><span class="c-n">22.6</span>Histograma</a></li><li><a href="manual-python-parte-2.html#cod-22-7"><span class="c-n">22.7</span>Vários painéis com subplots</a></li><li><a href="manual-python-parte-2.html#cod-22-8"><span class="c-n">22.8</span>Escala logarítmica</a></li><li><a href="manual-python-parte-2.html#cod-22-9"><span class="c-n">22.9</span>Sinal e espectro lado a lado</a></li><li><a href="manual-python-parte-2.html#cod-22-10"><span class="c-n">22.10</span>Salvando para o relatório</a></li></ul></div>
+<div class="sec" data-busca="pandas: tabelas de dados 23.1 series e dataframe 23.2 lendo um csv 23.3 inspecionando o conjunto 23.4 selecionando e filtrando 23.5 colunas derivadas e ordenacao 23.6 agrupando e resumindo 23.7 grafico direto do dataframe 23.8 exportando "><a class="sec-lin" href="manual-python-parte-2.html#sec-23-pandas-tabelas-de-dados"><span class="sec-n">23</span><span class="sec-t">pandas: tabelas de dados</span><span class="sec-l"></span><span class="sec-c">8</span></a><ul class="codigos"><li><a href="manual-python-parte-2.html#cod-23-1"><span class="c-n">23.1</span>Series e DataFrame</a></li><li><a href="manual-python-parte-2.html#cod-23-2"><span class="c-n">23.2</span>Lendo um CSV</a></li><li><a href="manual-python-parte-2.html#cod-23-3"><span class="c-n">23.3</span>Inspecionando o conjunto</a></li><li><a href="manual-python-parte-2.html#cod-23-4"><span class="c-n">23.4</span>Selecionando e filtrando</a></li><li><a href="manual-python-parte-2.html#cod-23-5"><span class="c-n">23.5</span>Colunas derivadas e ordenação</a></li><li><a href="manual-python-parte-2.html#cod-23-6"><span class="c-n">23.6</span>Agrupando e resumindo</a></li><li><a href="manual-python-parte-2.html#cod-23-7"><span class="c-n">23.7</span>Gráfico direto do DataFrame</a></li><li><a href="manual-python-parte-2.html#cod-23-8"><span class="c-n">23.8</span>Exportando</a></li></ul></div>
+<div class="sec" data-busca="projeto: da medida ao relatorio 24.1 etapa 1: coleta (simulada) 24.2 etapa 2: analise 24.3 etapa 3: figuras 24.4 etapa 4: relatorio automatico "><a class="sec-lin" href="manual-python-parte-2.html#sec-24-projeto-da-medida-ao-relatorio"><span class="sec-n">24</span><span class="sec-t">Projeto: da medida ao relatório</span><span class="sec-l"></span><span class="sec-c">4</span></a><ul class="codigos"><li><a href="manual-python-parte-2.html#cod-24-1"><span class="c-n">24.1</span>Etapa 1: coleta (simulada)</a></li><li><a href="manual-python-parte-2.html#cod-24-2"><span class="c-n">24.2</span>Etapa 2: análise</a></li><li><a href="manual-python-parte-2.html#cod-24-3"><span class="c-n">24.3</span>Etapa 3: figuras</a></li><li><a href="manual-python-parte-2.html#cod-24-4"><span class="c-n">24.4</span>Etapa 4: relatório automático</a></li></ul></div>
+<p class="bloco"><a href="manual-python-parte-2.html#parte-apendices">|| bloco IX &nbsp; Apêndices</a></p>
+<div class="sec" data-busca="cartao de consulta cientifica e.1 resumo "><a class="sec-lin" href="manual-python-parte-2.html#sec-e-cartao-de-consulta-cientifica"><span class="sec-n">E</span><span class="sec-t">Cartão de consulta científica</span><span class="sec-l"></span><span class="sec-c">1</span></a><ul class="codigos"><li><a href="manual-python-parte-2.html#cod-E-1"><span class="c-n">E.1</span>Resumo</a></li></ul></div>
+</section>
+<section class="vol" id="vol-III">
+<h2><span class="vol-n">PARTE III</span><span class="vol-t">Aprendizado de máquina</span></h2>
+<p class="vol-pref"><a href="manual-python-parte-3.html#como-usar-3">&gt;&gt; abrir o volume e ler a apresentação</a></p>
+<p class="bloco"><a href="manual-python-parte-3.html#parte-analise-dos-requisitos">|| bloco X &nbsp; Análise dos requisitos</a></p>
+<div class="sec" data-busca="o processo de desenvolvimento 25.1 o vocabulario em codigo "><a class="sec-lin" href="manual-python-parte-3.html#sec-25-o-processo-de-desenvolvimento"><span class="sec-n">25</span><span class="sec-t">O processo de desenvolvimento</span><span class="sec-l"></span><span class="sec-c">1</span></a><ul class="codigos"><li><a href="manual-python-parte-3.html#cod-25-1"><span class="c-n">25.1</span>O vocabulário em código</a></li></ul></div>
+<div class="sec" data-busca="analise dos requisitos 26.1 traduzindo o custo do erro em numeros 26.2 a linha de base que o modelo precisa vencer 26.3 registrando os requisitos "><a class="sec-lin" href="manual-python-parte-3.html#sec-26-analise-dos-requisitos"><span class="sec-n">26</span><span class="sec-t">Análise dos requisitos</span><span class="sec-l"></span><span class="sec-c">3</span></a><ul class="codigos"><li><a href="manual-python-parte-3.html#cod-26-1"><span class="c-n">26.1</span>Traduzindo o custo do erro em números</a></li><li><a href="manual-python-parte-3.html#cod-26-2"><span class="c-n">26.2</span>A linha de base que o modelo precisa vencer</a></li><li><a href="manual-python-parte-3.html#cod-26-3"><span class="c-n">26.3</span>Registrando os requisitos</a></li></ul></div>
+<p class="bloco"><a href="manual-python-parte-3.html#parte-preparacao-de-dados">|| bloco XI &nbsp; Preparação de dados</a></p>
+<div class="sec" data-busca="preparacao de dados 27.1 escala dos atributos 27.2 atributos categoricos 27.3 valores faltantes 27.4 pipeline: o jeito certo de encadear valor"><a class="sec-lin" href="manual-python-parte-3.html#sec-27-preparacao-de-dados"><span class="sec-n">27</span><span class="sec-t">Preparação de dados</span><span class="sec-l"></span><span class="sec-c">4</span></a><ul class="codigos"><li><a href="manual-python-parte-3.html#cod-27-1"><span class="c-n">27.1</span>Escala dos atributos</a></li><li><a href="manual-python-parte-3.html#cod-27-2"><span class="c-n">27.2</span>Atributos categóricos</a></li><li><a href="manual-python-parte-3.html#cod-27-3"><span class="c-n">27.3</span>Valores faltantes</a></li><li><a href="manual-python-parte-3.html#cod-27-4"><span class="c-n">27.4</span>Pipeline: o jeito certo de encadear</a></li></ul></div>
+<p class="bloco"><a href="manual-python-parte-3.html#parte-aprendizado-de-maquina-supervisionado">|| bloco XII &nbsp; Aprendizado de máquina: supervisionado</a></p>
+<div class="sec" data-busca="treinamento: o contrato do scikit-learn 28.1 primeiro classificador 28.2 trocando o algoritmo 28.3 matriz de confusao e relatorio 28.4 precisao, revocacao e f1 na pratica 28.5 validacao cruzada 28.6 ajuste de hiperparametros 28.7 sobreajuste em uma imagem "><a class="sec-lin" href="manual-python-parte-3.html#sec-28-treinamento-o-contrato-do-scikit-learn"><span class="sec-n">28</span><span class="sec-t">Treinamento: o contrato do scikit-learn</span><span class="sec-l"></span><span class="sec-c">7</span></a><ul class="codigos"><li><a href="manual-python-parte-3.html#cod-28-1"><span class="c-n">28.1</span>Primeiro classificador</a></li><li><a href="manual-python-parte-3.html#cod-28-2"><span class="c-n">28.2</span>Trocando o algoritmo</a></li><li><a href="manual-python-parte-3.html#cod-28-3"><span class="c-n">28.3</span>Matriz de confusão e relatório</a></li><li><a href="manual-python-parte-3.html#cod-28-4"><span class="c-n">28.4</span>Precisão, revocação e F1 na prática</a></li><li><a href="manual-python-parte-3.html#cod-28-5"><span class="c-n">28.5</span>Validação cruzada</a></li><li><a href="manual-python-parte-3.html#cod-28-6"><span class="c-n">28.6</span>Ajuste de hiperparâmetros</a></li><li><a href="manual-python-parte-3.html#cod-28-7"><span class="c-n">28.7</span>Sobreajuste em uma imagem</a></li></ul></div>
+<div class="sec" data-busca="algoritmos classicos e fronteiras de decisao 29.1 naive bayes 29.2 discriminantes linear e quadratico 29.3 svm e o efeito do kernel 29.4 desenhando as fronteiras 29.5 regressao logistica: lendo os coeficientes "><a class="sec-lin" href="manual-python-parte-3.html#sec-29-algoritmos-classicos-e-fronteiras-de-decisao"><span class="sec-n">29</span><span class="sec-t">Algoritmos clássicos e fronteiras de decisão</span><span class="sec-l"></span><span class="sec-c">5</span></a><ul class="codigos"><li><a href="manual-python-parte-3.html#cod-29-1"><span class="c-n">29.1</span>Naive Bayes</a></li><li><a href="manual-python-parte-3.html#cod-29-2"><span class="c-n">29.2</span>Discriminantes linear e quadrático</a></li><li><a href="manual-python-parte-3.html#cod-29-3"><span class="c-n">29.3</span>SVM e o efeito do kernel</a></li><li><a href="manual-python-parte-3.html#cod-29-4"><span class="c-n">29.4</span>Desenhando as fronteiras</a></li><li><a href="manual-python-parte-3.html#cod-29-5"><span class="c-n">29.5</span>Regressão logística: lendo os coeficientes</a></li></ul></div>
+<div class="sec" data-busca="regressao e series temporais 30.1 regressao linear 30.2 comparando regressores 30.3 transformando serie em tabela 30.4 previsao contra a linha de base 30.5 validacao que respeita o tempo regressor temporal"><a class="sec-lin" href="manual-python-parte-3.html#sec-30-regressao-e-series-temporais"><span class="sec-n">30</span><span class="sec-t">Regressão e séries temporais</span><span class="sec-l"></span><span class="sec-c">5</span></a><ul class="codigos"><li><a href="manual-python-parte-3.html#cod-30-1"><span class="c-n">30.1</span>Regressão linear</a></li><li><a href="manual-python-parte-3.html#cod-30-2"><span class="c-n">30.2</span>Comparando regressores</a></li><li><a href="manual-python-parte-3.html#cod-30-3"><span class="c-n">30.3</span>Transformando série em tabela</a></li><li><a href="manual-python-parte-3.html#cod-30-4"><span class="c-n">30.4</span>Previsão contra a linha de base</a></li><li><a href="manual-python-parte-3.html#cod-30-5"><span class="c-n">30.5</span>Validação que respeita o tempo</a></li></ul></div>
+<div class="sec" data-busca="modelos em conjunto 31.1 votacao entre modelos diferentes 31.2 bagging: muitas arvores em amostras sorteadas 31.3 importancia dos atributos 31.4 boosting 31.5 empilhamento 31.6 importancia por permutacao arvor"><a class="sec-lin" href="manual-python-parte-3.html#sec-31-modelos-em-conjunto"><span class="sec-n">31</span><span class="sec-t">Modelos em conjunto</span><span class="sec-l"></span><span class="sec-c">6</span></a><ul class="codigos"><li><a href="manual-python-parte-3.html#cod-31-1"><span class="c-n">31.1</span>Votação entre modelos diferentes</a></li><li><a href="manual-python-parte-3.html#cod-31-2"><span class="c-n">31.2</span>Bagging: muitas árvores em amostras sorteadas</a></li><li><a href="manual-python-parte-3.html#cod-31-3"><span class="c-n">31.3</span>Importância dos atributos</a></li><li><a href="manual-python-parte-3.html#cod-31-4"><span class="c-n">31.4</span>Boosting</a></li><li><a href="manual-python-parte-3.html#cod-31-5"><span class="c-n">31.5</span>Empilhamento</a></li><li><a href="manual-python-parte-3.html#cod-31-6"><span class="c-n">31.6</span>Importância por permutação</a></li></ul></div>
+<div class="sec" data-busca="avaliacao: metricas, limiar e confianca 32.1 curva roc e auc 32.2 curva precisao contra revocacao 32.3 escolhendo o limiar pelo custo 32.4 as probabilidades sao confiaveis? 32.5 intervalo de confianca por reamostragem 32.6 dois modelos sao mesmo diferentes? confiavel"><a class="sec-lin" href="manual-python-parte-3.html#sec-32-avaliacao-metricas-limiar-e-confianca"><span class="sec-n">32</span><span class="sec-t">Avaliação: métricas, limiar e confiança</span><span class="sec-l"></span><span class="sec-c">6</span></a><ul class="codigos"><li><a href="manual-python-parte-3.html#cod-32-1"><span class="c-n">32.1</span>Curva ROC e AUC</a></li><li><a href="manual-python-parte-3.html#cod-32-2"><span class="c-n">32.2</span>Curva precisão contra revocação</a></li><li><a href="manual-python-parte-3.html#cod-32-3"><span class="c-n">32.3</span>Escolhendo o limiar pelo custo</a></li><li><a href="manual-python-parte-3.html#cod-32-4"><span class="c-n">32.4</span>As probabilidades são confiáveis?</a></li><li><a href="manual-python-parte-3.html#cod-32-5"><span class="c-n">32.5</span>Intervalo de confiança por reamostragem</a></li><li><a href="manual-python-parte-3.html#cod-32-6"><span class="c-n">32.6</span>Dois modelos são mesmo diferentes?</a></li></ul></div>
+<div class="sec" data-busca="interpretabilidade 33.1 arvore como conjunto de regras 33.2 dependencia parcial 33.3 efeito em cada amostra 33.4 contribuicao por amostra 33.5 modelo substituto "><a class="sec-lin" href="manual-python-parte-3.html#sec-33-interpretabilidade"><span class="sec-n">33</span><span class="sec-t">Interpretabilidade</span><span class="sec-l"></span><span class="sec-c">5</span></a><ul class="codigos"><li><a href="manual-python-parte-3.html#cod-33-1"><span class="c-n">33.1</span>Árvore como conjunto de regras</a></li><li><a href="manual-python-parte-3.html#cod-33-2"><span class="c-n">33.2</span>Dependência parcial</a></li><li><a href="manual-python-parte-3.html#cod-33-3"><span class="c-n">33.3</span>Efeito em cada amostra</a></li><li><a href="manual-python-parte-3.html#cod-33-4"><span class="c-n">33.4</span>Contribuição por amostra</a></li><li><a href="manual-python-parte-3.html#cod-33-5"><span class="c-n">33.5</span>Modelo substituto</a></li></ul></div>
+<p class="bloco"><a href="manual-python-parte-3.html#parte-aprendizado-de-maquina-nao-supervisionado">|| bloco XIII &nbsp; Aprendizado de máquina: não supervisionado</a></p>
+<div class="sec" data-busca="dimensionalidade e agrupamento 34.1 quanta informacao cabe em poucos eixos 34.2 visualizando em duas dimensoes 34.3 pca dentro do pipeline 34.4 t-sne para visualizacao 34.5 kmeans 34.6 quantos grupos: cotovelo e silhueta 34.7 dbscan: grupos de forma qualquer dimensao kmeam"><a class="sec-lin" href="manual-python-parte-3.html#sec-34-dimensionalidade-e-agrupamento"><span class="sec-n">34</span><span class="sec-t">Dimensionalidade e agrupamento</span><span class="sec-l"></span><span class="sec-c">7</span></a><ul class="codigos"><li><a href="manual-python-parte-3.html#cod-34-1"><span class="c-n">34.1</span>Quanta informação cabe em poucos eixos</a></li><li><a href="manual-python-parte-3.html#cod-34-2"><span class="c-n">34.2</span>Visualizando em duas dimensões</a></li><li><a href="manual-python-parte-3.html#cod-34-3"><span class="c-n">34.3</span>PCA dentro do pipeline</a></li><li><a href="manual-python-parte-3.html#cod-34-4"><span class="c-n">34.4</span>t-SNE para visualização</a></li><li><a href="manual-python-parte-3.html#cod-34-5"><span class="c-n">34.5</span>KMeans</a></li><li><a href="manual-python-parte-3.html#cod-34-6"><span class="c-n">34.6</span>Quantos grupos: cotovelo e silhueta</a></li><li><a href="manual-python-parte-3.html#cod-34-7"><span class="c-n">34.7</span>DBSCAN: grupos de forma qualquer</a></li></ul></div>
+<div class="sec" data-busca="deteccao de anomalias 35.1 linha de base estatistica 35.2 isolation forest 35.3 comparando detectores detector"><a class="sec-lin" href="manual-python-parte-3.html#sec-35-deteccao-de-anomalias"><span class="sec-n">35</span><span class="sec-t">Detecção de anomalias</span><span class="sec-l"></span><span class="sec-c">3</span></a><ul class="codigos"><li><a href="manual-python-parte-3.html#cod-35-1"><span class="c-n">35.1</span>Linha de base estatística</a></li><li><a href="manual-python-parte-3.html#cod-35-2"><span class="c-n">35.2</span>Isolation Forest</a></li><li><a href="manual-python-parte-3.html#cod-35-3"><span class="c-n">35.3</span>Comparando detectores</a></li></ul></div>
+<div class="sec" data-busca="poucos rotulos: semi e autossupervisao 36.1 o problema em numeros 36.2 autotreinamento e propagacao de erro 36.3 propagacao de rotulos pelo grafo 36.4 aprendizado ativo "><a class="sec-lin" href="manual-python-parte-3.html#sec-36-poucos-rotulos-semi-e-autossupervisao"><span class="sec-n">36</span><span class="sec-t">Poucos rótulos: semi e autossupervisão</span><span class="sec-l"></span><span class="sec-c">4</span></a><ul class="codigos"><li><a href="manual-python-parte-3.html#cod-36-1"><span class="c-n">36.1</span>O problema em números</a></li><li><a href="manual-python-parte-3.html#cod-36-2"><span class="c-n">36.2</span>Autotreinamento e propagação de erro</a></li><li><a href="manual-python-parte-3.html#cod-36-3"><span class="c-n">36.3</span>Propagação de rótulos pelo grafo</a></li><li><a href="manual-python-parte-3.html#cod-36-4"><span class="c-n">36.4</span>Aprendizado ativo</a></li></ul></div>
+<p class="bloco"><a href="manual-python-parte-3.html#parte-aprendizado-por-reforco">|| bloco XIV &nbsp; Aprendizado por reforço</a></p>
+<div class="sec" data-busca="aprendizado por reforco 37.1 explorar contra aproveitar 37.2 um mundo em grade 37.3 treinando o agente 37.4 a politica aprendida, em ascii "><a class="sec-lin" href="manual-python-parte-3.html#sec-37-aprendizado-por-reforco"><span class="sec-n">37</span><span class="sec-t">Aprendizado por reforço</span><span class="sec-l"></span><span class="sec-c">4</span></a><ul class="codigos"><li><a href="manual-python-parte-3.html#cod-37-1"><span class="c-n">37.1</span>Explorar contra aproveitar</a></li><li><a href="manual-python-parte-3.html#cod-37-2"><span class="c-n">37.2</span>Um mundo em grade</a></li><li><a href="manual-python-parte-3.html#cod-37-3"><span class="c-n">37.3</span>Treinando o agente</a></li><li><a href="manual-python-parte-3.html#cod-37-4"><span class="c-n">37.4</span>A política aprendida, em ASCII</a></li></ul></div>
+<p class="bloco"><a href="manual-python-parte-3.html#parte-aprendizado-profundo">|| bloco XV &nbsp; Aprendizado profundo</a></p>
+<div class="sec" data-busca="rede neural do zero: o treinamento por dentro 38.1 o neuronio 38.2 funcoes de ativacao 38.3 descida do gradiente em uma dimensao 38.4 rede completa resolvendo o xor 38.5 a curva de perda funcao"><a class="sec-lin" href="manual-python-parte-3.html#sec-38-rede-neural-do-zero-o-treinamento-por-dentro"><span class="sec-n">38</span><span class="sec-t">Rede neural do zero: o treinamento por dentro</span><span class="sec-l"></span><span class="sec-c">5</span></a><ul class="codigos"><li><a href="manual-python-parte-3.html#cod-38-1"><span class="c-n">38.1</span>O neurônio</a></li><li><a href="manual-python-parte-3.html#cod-38-2"><span class="c-n">38.2</span>Funções de ativação</a></li><li><a href="manual-python-parte-3.html#cod-38-3"><span class="c-n">38.3</span>Descida do gradiente em uma dimensão</a></li><li><a href="manual-python-parte-3.html#cod-38-4"><span class="c-n">38.4</span>Rede completa resolvendo o XOR</a></li><li><a href="manual-python-parte-3.html#cod-38-5"><span class="c-n">38.5</span>A curva de perda</a></li></ul></div>
+<div class="sec" data-busca="tensorflow e keras 39.1 tensores 39.2 derivada automatica 39.3 primeiro modelo sequential 39.4 treinando e avaliando 39.5 curvas de treino 39.6 classificacao multiclasse 39.7 regularizacao e dropout 39.8 parada antecipada e melhor modelo 39.9 salvando e recarregando tensor"><a class="sec-lin" href="manual-python-parte-3.html#sec-39-tensorflow-e-keras"><span class="sec-n">39</span><span class="sec-t">TensorFlow e Keras</span><span class="sec-l"></span><span class="sec-c">9</span></a><ul class="codigos"><li><a href="manual-python-parte-3.html#cod-39-1"><span class="c-n">39.1</span>Tensores</a></li><li><a href="manual-python-parte-3.html#cod-39-2"><span class="c-n">39.2</span>Derivada automática</a></li><li><a href="manual-python-parte-3.html#cod-39-3"><span class="c-n">39.3</span>Primeiro modelo Sequential</a></li><li><a href="manual-python-parte-3.html#cod-39-4"><span class="c-n">39.4</span>Treinando e avaliando</a></li><li><a href="manual-python-parte-3.html#cod-39-5"><span class="c-n">39.5</span>Curvas de treino</a></li><li><a href="manual-python-parte-3.html#cod-39-6"><span class="c-n">39.6</span>Classificação multiclasse</a></li><li><a href="manual-python-parte-3.html#cod-39-7"><span class="c-n">39.7</span>Regularização e dropout</a></li><li><a href="manual-python-parte-3.html#cod-39-8"><span class="c-n">39.8</span>Parada antecipada e melhor modelo</a></li><li><a href="manual-python-parte-3.html#cod-39-9"><span class="c-n">39.9</span>Salvando e recarregando</a></li></ul></div>
+<div class="sec" data-busca="redes convolucionais e sinais 40.1 a imagem como tensor 40.2 convolucao manual 40.3 cnn para digitos 40.4 onde a cnn erra 40.5 classificando formas de onda 40.6 as formas de onda usadas convolucional sinal"><a class="sec-lin" href="manual-python-parte-3.html#sec-40-redes-convolucionais-e-sinais"><span class="sec-n">40</span><span class="sec-t">Redes convolucionais e sinais</span><span class="sec-l"></span><span class="sec-c">6</span></a><ul class="codigos"><li><a href="manual-python-parte-3.html#cod-40-1"><span class="c-n">40.1</span>A imagem como tensor</a></li><li><a href="manual-python-parte-3.html#cod-40-2"><span class="c-n">40.2</span>Convolução manual</a></li><li><a href="manual-python-parte-3.html#cod-40-3"><span class="c-n">40.3</span>CNN para dígitos</a></li><li><a href="manual-python-parte-3.html#cod-40-4"><span class="c-n">40.4</span>Onde a CNN erra</a></li><li><a href="manual-python-parte-3.html#cod-40-5"><span class="c-n">40.5</span>Classificando formas de onda</a></li><li><a href="manual-python-parte-3.html#cod-40-6"><span class="c-n">40.6</span>As formas de onda usadas</a></li></ul></div>
+<div class="sec" data-busca="arquiteturas e treino avancado 41.1 api funcional do keras 41.2 conexao residual 41.3 compressao sem rotulo 41.4 antes e depois da reconstrucao 41.5 autoencoder para remover ruido de sinal 41.6 lstm para previsao de serie 41.7 comparando otimizadores 41.8 normalizacao em lote e agendamento da taxa 41.9 reaproveitando um modelo ja treinado depol otimizador"><a class="sec-lin" href="manual-python-parte-3.html#sec-41-arquiteturas-e-treino-avancado"><span class="sec-n">41</span><span class="sec-t">Arquiteturas e treino avançado</span><span class="sec-l"></span><span class="sec-c">9</span></a><ul class="codigos"><li><a href="manual-python-parte-3.html#cod-41-1"><span class="c-n">41.1</span>API funcional do Keras</a></li><li><a href="manual-python-parte-3.html#cod-41-2"><span class="c-n">41.2</span>Conexão residual</a></li><li><a href="manual-python-parte-3.html#cod-41-3"><span class="c-n">41.3</span>Compressão sem rótulo</a></li><li><a href="manual-python-parte-3.html#cod-41-4"><span class="c-n">41.4</span>Antes e depois da reconstrução</a></li><li><a href="manual-python-parte-3.html#cod-41-5"><span class="c-n">41.5</span>Autoencoder para remover ruído de sinal</a></li><li><a href="manual-python-parte-3.html#cod-41-6"><span class="c-n">41.6</span>LSTM para previsão de série</a></li><li><a href="manual-python-parte-3.html#cod-41-7"><span class="c-n">41.7</span>Comparando otimizadores</a></li><li><a href="manual-python-parte-3.html#cod-41-8"><span class="c-n">41.8</span>Normalização em lote e agendamento da taxa</a></li><li><a href="manual-python-parte-3.html#cod-41-9"><span class="c-n">41.9</span>Reaproveitando um modelo já treinado</a></li></ul></div>
+<div class="sec" data-busca="pytorch 42.1 tensores 42.2 derivadas automaticas 42.3 definindo a rede 42.4 o laco de treino 42.5 lotes com dataloader 42.6 salvando e recarregando tensor"><a class="sec-lin" href="manual-python-parte-3.html#sec-42-pytorch"><span class="sec-n">42</span><span class="sec-t">PyTorch</span><span class="sec-l"></span><span class="sec-c">6</span></a><ul class="codigos"><li><a href="manual-python-parte-3.html#cod-42-1"><span class="c-n">42.1</span>Tensores</a></li><li><a href="manual-python-parte-3.html#cod-42-2"><span class="c-n">42.2</span>Derivadas automáticas</a></li><li><a href="manual-python-parte-3.html#cod-42-3"><span class="c-n">42.3</span>Definindo a rede</a></li><li><a href="manual-python-parte-3.html#cod-42-4"><span class="c-n">42.4</span>O laço de treino</a></li><li><a href="manual-python-parte-3.html#cod-42-5"><span class="c-n">42.5</span>Lotes com DataLoader</a></li><li><a href="manual-python-parte-3.html#cod-42-6"><span class="c-n">42.6</span>Salvando e recarregando</a></li></ul></div>
+<p class="bloco"><a href="manual-python-parte-3.html#parte-predicao-e-exportacao">|| bloco XVI &nbsp; Predição e exportação</a></p>
+<div class="sec" data-busca="predicao, implantacao e exportacao 43.1 salvando e recarregando o modelo 43.2 medindo o tempo de inferencia 43.3 tamanho do modelo em disco 43.4 convertendo para tensorflow lite 43.5 o modelo quantizado ainda acerta? 43.6 detectando desvio nos dados 43.7 uma funcao de inferencia para producao "><a class="sec-lin" href="manual-python-parte-3.html#sec-43-predicao-implantacao-e-exportacao"><span class="sec-n">43</span><span class="sec-t">Predição, implantação e exportação</span><span class="sec-l"></span><span class="sec-c">7</span></a><ul class="codigos"><li><a href="manual-python-parte-3.html#cod-43-1"><span class="c-n">43.1</span>Salvando e recarregando o modelo</a></li><li><a href="manual-python-parte-3.html#cod-43-2"><span class="c-n">43.2</span>Medindo o tempo de inferência</a></li><li><a href="manual-python-parte-3.html#cod-43-3"><span class="c-n">43.3</span>Tamanho do modelo em disco</a></li><li><a href="manual-python-parte-3.html#cod-43-4"><span class="c-n">43.4</span>Convertendo para TensorFlow Lite</a></li><li><a href="manual-python-parte-3.html#cod-43-5"><span class="c-n">43.5</span>O modelo quantizado ainda acerta?</a></li><li><a href="manual-python-parte-3.html#cod-43-6"><span class="c-n">43.6</span>Detectando desvio nos dados</a></li><li><a href="manual-python-parte-3.html#cod-43-7"><span class="c-n">43.7</span>Uma função de inferência para produção</a></li></ul></div>
+<div class="sec" data-busca="fechando o ciclo: avaliacao honesta 44.1 reprodutibilidade 44.2 vazamento de dados 44.3 treino, validacao e teste 44.4 classes desbalanceadas 44.5 curva de aprendizado 44.6 registrando o experimento class"><a class="sec-lin" href="manual-python-parte-3.html#sec-44-fechando-o-ciclo-avaliacao-honesta"><span class="sec-n">44</span><span class="sec-t">Fechando o ciclo: avaliação honesta</span><span class="sec-l"></span><span class="sec-c">6</span></a><ul class="codigos"><li><a href="manual-python-parte-3.html#cod-44-1"><span class="c-n">44.1</span>Reprodutibilidade</a></li><li><a href="manual-python-parte-3.html#cod-44-2"><span class="c-n">44.2</span>Vazamento de dados</a></li><li><a href="manual-python-parte-3.html#cod-44-3"><span class="c-n">44.3</span>Treino, validação e teste</a></li><li><a href="manual-python-parte-3.html#cod-44-4"><span class="c-n">44.4</span>Classes desbalanceadas</a></li><li><a href="manual-python-parte-3.html#cod-44-5"><span class="c-n">44.5</span>Curva de aprendizado</a></li><li><a href="manual-python-parte-3.html#cod-44-6"><span class="c-n">44.6</span>Registrando o experimento</a></li></ul></div>
+<p class="bloco"><a href="manual-python-parte-3.html#parte-apendices">|| bloco XVII &nbsp; Apêndices</a></p>
+<div class="sec" data-busca="cartao de consulta e glossario f.1 resumo das tres bibliotecas "><a class="sec-lin" href="manual-python-parte-3.html#sec-f-cartao-de-consulta-e-glossario"><span class="sec-n">F</span><span class="sec-t">Cartão de consulta e glossário</span><span class="sec-l"></span><span class="sec-c">1</span></a><ul class="codigos"><li><a href="manual-python-parte-3.html#cod-F-1"><span class="c-n">F.1</span>Resumo das três bibliotecas</a></li></ul></div>
+</section>
+<section class="vol" id="vol-IV">
+<h2><span class="vol-n">PARTE IV</span><span class="vol-t">IA generativa</span></h2>
+<p class="vol-pref"><a href="manual-python-parte-4.html#como-usar-4">&gt;&gt; abrir o volume e ler a apresentação</a></p>
+<p class="bloco"><a href="manual-python-parte-4.html#parte-fundamentos-da-geracao">|| bloco XVIII &nbsp; Fundamentos da geração</a></p>
+<div class="sec" data-busca="panorama da ia generativa 45.1 as seis etapas na ia generativa 45.2 discriminativo contra generativo, no mesmo conjunto "><a class="sec-lin" href="manual-python-parte-4.html#sec-45-panorama-da-ia-generativa"><span class="sec-n">45</span><span class="sec-t">Panorama da IA generativa</span><span class="sec-l"></span><span class="sec-c">2</span></a><ul class="codigos"><li><a href="manual-python-parte-4.html#cod-45-1"><span class="c-n">45.1</span>As seis etapas na IA generativa</a></li><li><a href="manual-python-parte-4.html#cod-45-2"><span class="c-n">45.2</span>Discriminativo contra generativo, no mesmo conjunto</a></li></ul></div>
+<div class="sec" data-busca="tokenizacao e embeddings 46.1 tres granularidades 46.2 bpe: aprendendo o vocabulario a partir do texto 46.3 do indice ao vetor 46.4 treinando embeddings e vendo o que emergiu 46.5 similaridade do cosseno 46.6 visualizando o espaco aprendido "><a class="sec-lin" href="manual-python-parte-4.html#sec-46-tokenizacao-e-embeddings"><span class="sec-n">46</span><span class="sec-t">Tokenização e embeddings</span><span class="sec-l"></span><span class="sec-c">6</span></a><ul class="codigos"><li><a href="manual-python-parte-4.html#cod-46-1"><span class="c-n">46.1</span>Três granularidades</a></li><li><a href="manual-python-parte-4.html#cod-46-2"><span class="c-n">46.2</span>BPE: aprendendo o vocabulário a partir do texto</a></li><li><a href="manual-python-parte-4.html#cod-46-3"><span class="c-n">46.3</span>Do índice ao vetor</a></li><li><a href="manual-python-parte-4.html#cod-46-4"><span class="c-n">46.4</span>Treinando embeddings e vendo o que emergiu</a></li><li><a href="manual-python-parte-4.html#cod-46-5"><span class="c-n">46.5</span>Similaridade do cosseno</a></li><li><a href="manual-python-parte-4.html#cod-46-6"><span class="c-n">46.6</span>Visualizando o espaço aprendido</a></li></ul></div>
+<p class="bloco"><a href="manual-python-parte-4.html#parte-a-arquitetura-transformer">|| bloco XIX &nbsp; A arquitetura transformer</a></p>
+<div class="sec" data-busca="atencao e transformers 47.1 atencao escrita a mao 47.2 mascara causal 47.3 codificacao de posicao 47.4 bloco codificador 47.5 classificando formas de onda com atencao 47.6 onde o modelo prestou atencao "><a class="sec-lin" href="manual-python-parte-4.html#sec-47-atencao-e-transformers"><span class="sec-n">47</span><span class="sec-t">Atenção e transformers</span><span class="sec-l"></span><span class="sec-c">6</span></a><ul class="codigos"><li><a href="manual-python-parte-4.html#cod-47-1"><span class="c-n">47.1</span>Atenção escrita à mão</a></li><li><a href="manual-python-parte-4.html#cod-47-2"><span class="c-n">47.2</span>Máscara causal</a></li><li><a href="manual-python-parte-4.html#cod-47-3"><span class="c-n">47.3</span>Codificação de posição</a></li><li><a href="manual-python-parte-4.html#cod-47-4"><span class="c-n">47.4</span>Bloco codificador</a></li><li><a href="manual-python-parte-4.html#cod-47-5"><span class="c-n">47.5</span>Classificando formas de onda com atenção</a></li><li><a href="manual-python-parte-4.html#cod-47-6"><span class="c-n">47.6</span>Onde o modelo prestou atenção</a></li></ul></div>
+<p class="bloco"><a href="manual-python-parte-4.html#parte-familias-generativas">|| bloco XX &nbsp; Famílias generativas</a></p>
+<div class="sec" data-busca="autoencoder variacional e gan 48.1 o truque da reparametrizacao 48.2 treinando o vae 48.3 gerando digitos que nunca existiram 48.4 treinando uma gan pequena "><a class="sec-lin" href="manual-python-parte-4.html#sec-48-autoencoder-variacional-e-gan"><span class="sec-n">48</span><span class="sec-t">Autoencoder variacional e GAN</span><span class="sec-l"></span><span class="sec-c">4</span></a><ul class="codigos"><li><a href="manual-python-parte-4.html#cod-48-1"><span class="c-n">48.1</span>O truque da reparametrização</a></li><li><a href="manual-python-parte-4.html#cod-48-2"><span class="c-n">48.2</span>Treinando o VAE</a></li><li><a href="manual-python-parte-4.html#cod-48-3"><span class="c-n">48.3</span>Gerando dígitos que nunca existiram</a></li><li><a href="manual-python-parte-4.html#cod-48-4"><span class="c-n">48.4</span>Treinando uma GAN pequena</a></li></ul></div>
+<div class="sec" data-busca="modelos de difusao 49.1 o processo direto 49.2 treinando a rede que preve o ruido 49.3 gerando a partir de ruido puro "><a class="sec-lin" href="manual-python-parte-4.html#sec-49-modelos-de-difusao"><span class="sec-n">49</span><span class="sec-t">Modelos de difusão</span><span class="sec-l"></span><span class="sec-c">3</span></a><ul class="codigos"><li><a href="manual-python-parte-4.html#cod-49-1"><span class="c-n">49.1</span>O processo direto</a></li><li><a href="manual-python-parte-4.html#cod-49-2"><span class="c-n">49.2</span>Treinando a rede que prevê o ruído</a></li><li><a href="manual-python-parte-4.html#cod-49-3"><span class="c-n">49.3</span>Gerando a partir de ruído puro</a></li></ul></div>
+<div class="sec" data-busca="geracao autorregressiva 50.1 treinando um modelo de caracteres 50.2 o laco de geracao e o efeito da temperatura 50.3 estrategias de amostragem 50.4 perplexidade: a metrica do modelo de linguagem caracter"><a class="sec-lin" href="manual-python-parte-4.html#sec-50-geracao-autorregressiva"><span class="sec-n">50</span><span class="sec-t">Geração autorregressiva</span><span class="sec-l"></span><span class="sec-c">4</span></a><ul class="codigos"><li><a href="manual-python-parte-4.html#cod-50-1"><span class="c-n">50.1</span>Treinando um modelo de caracteres</a></li><li><a href="manual-python-parte-4.html#cod-50-2"><span class="c-n">50.2</span>O laço de geração e o efeito da temperatura</a></li><li><a href="manual-python-parte-4.html#cod-50-3"><span class="c-n">50.3</span>Estratégias de amostragem</a></li><li><a href="manual-python-parte-4.html#cod-50-4"><span class="c-n">50.4</span>Perplexidade: a métrica do modelo de linguagem</a></li></ul></div>
+<p class="bloco"><a href="manual-python-parte-4.html#parte-sistemas-com-modelos-de-linguagem">|| bloco XXI &nbsp; Sistemas com modelos de linguagem</a></p>
+<div class="sec" data-busca="modelos de linguagem e prompting 51.1 as tres fases do treino de um llm 51.2 a estrutura de uma conversa 51.3 mantendo o historico 51.4 few-shot e saida estruturada 51.5 um agente: o modelo escolhendo a ferramenta fas"><a class="sec-lin" href="manual-python-parte-4.html#sec-51-modelos-de-linguagem-e-prompting"><span class="sec-n">51</span><span class="sec-t">Modelos de linguagem e prompting</span><span class="sec-l"></span><span class="sec-c">5</span></a><ul class="codigos"><li><a href="manual-python-parte-4.html#cod-51-1"><span class="c-n">51.1</span>As três fases do treino de um LLM</a></li><li><a href="manual-python-parte-4.html#cod-51-2"><span class="c-n">51.2</span>A estrutura de uma conversa</a></li><li><a href="manual-python-parte-4.html#cod-51-3"><span class="c-n">51.3</span>Mantendo o histórico</a></li><li><a href="manual-python-parte-4.html#cod-51-4"><span class="c-n">51.4</span>Few-shot e saída estruturada</a></li><li><a href="manual-python-parte-4.html#cod-51-5"><span class="c-n">51.5</span>Um agente: o modelo escolhendo a ferramenta</a></li></ul></div>
+<div class="sec" data-busca="rag: geracao aumentada por recuperacao 52.1 o fluxo completo, em ascii 52.2 quebrando documentos em trechos 52.3 indice vetorial com tf-idf 52.4 recuperando os trechos relevantes 52.5 montando o prompt com o contexto 52.6 avaliando a recuperacao "><a class="sec-lin" href="manual-python-parte-4.html#sec-52-rag-geracao-aumentada-por-recuperacao"><span class="sec-n">52</span><span class="sec-t">RAG: geração aumentada por recuperação</span><span class="sec-l"></span><span class="sec-c">6</span></a><ul class="codigos"><li><a href="manual-python-parte-4.html#cod-52-1"><span class="c-n">52.1</span>O fluxo completo, em ASCII</a></li><li><a href="manual-python-parte-4.html#cod-52-2"><span class="c-n">52.2</span>Quebrando documentos em trechos</a></li><li><a href="manual-python-parte-4.html#cod-52-3"><span class="c-n">52.3</span>Índice vetorial com TF-IDF</a></li><li><a href="manual-python-parte-4.html#cod-52-4"><span class="c-n">52.4</span>Recuperando os trechos relevantes</a></li><li><a href="manual-python-parte-4.html#cod-52-5"><span class="c-n">52.5</span>Montando o prompt com o contexto</a></li><li><a href="manual-python-parte-4.html#cod-52-6"><span class="c-n">52.6</span>Avaliando a recuperação</a></li></ul></div>
+<div class="sec" data-busca="ajuste fino, lora e quantizacao 53.1 congelar e treinar so a cabeca 53.2 implementando lora do zero 53.3 lora aprendendo uma tarefa nova 53.4 o custo de guardar os pesos 53.5 medindo o efeito da quantizacao "><a class="sec-lin" href="manual-python-parte-4.html#sec-53-ajuste-fino-lora-e-quantizacao"><span class="sec-n">53</span><span class="sec-t">Ajuste fino, LoRA e quantização</span><span class="sec-l"></span><span class="sec-c">5</span></a><ul class="codigos"><li><a href="manual-python-parte-4.html#cod-53-1"><span class="c-n">53.1</span>Congelar e treinar só a cabeça</a></li><li><a href="manual-python-parte-4.html#cod-53-2"><span class="c-n">53.2</span>Implementando LoRA do zero</a></li><li><a href="manual-python-parte-4.html#cod-53-3"><span class="c-n">53.3</span>LoRA aprendendo uma tarefa nova</a></li><li><a href="manual-python-parte-4.html#cod-53-4"><span class="c-n">53.4</span>O custo de guardar os pesos</a></li><li><a href="manual-python-parte-4.html#cod-53-5"><span class="c-n">53.5</span>Medindo o efeito da quantização</a></li></ul></div>
+<p class="bloco"><a href="manual-python-parte-4.html#parte-apendices">|| bloco XXII &nbsp; Apêndices</a></p>
+<div class="sec" data-busca="cartao de consulta e glossario g.1 resumo da parte iv "><a class="sec-lin" href="manual-python-parte-4.html#sec-g-cartao-de-consulta-e-glossario"><span class="sec-n">G</span><span class="sec-t">Cartão de consulta e glossário</span><span class="sec-l"></span><span class="sec-c">1</span></a><ul class="codigos"><li><a href="manual-python-parte-4.html#cod-G-1"><span class="c-n">G.1</span>Resumo da Parte IV</a></li></ul></div>
+</section>
+
+  <footer class="rodape-idx">
+    Manual de Experimentos · Linguagem Python · Ramon Mayor Martins, Ph.D. ·
+    IFSC Câmpus São José · Composto em Courier Prime ·
+    Todos os exemplos executados em Python 3.12
+  </footer>
+</main>
+<script>
+var campo = document.getElementById('busca');
+var secoes = Array.prototype.slice.call(document.querySelectorAll('.sec'));
+var blocos = Array.prototype.slice.call(document.querySelectorAll('.bloco'));
+var vols = Array.prototype.slice.call(document.querySelectorAll('.vol'));
+var vazio = document.getElementById('vazio');
+var contador = document.getElementById('contador');
+
+function filtrar() {
+  var termo = campo.value.trim().toLowerCase()
+      .normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  var achados = 0;
+  secoes.forEach(function (s) {
+    var bate = !termo || s.dataset.busca.indexOf(termo) !== -1;
+    s.classList.toggle('oculto', !bate);
+    s.classList.toggle('achou', !!termo && bate);
+    if (bate) { achados++; }
+  });
+  blocos.forEach(function (b) { b.classList.toggle('oculto', !!termo); });
+  vols.forEach(function (v) {
+    var visiveis = v.querySelectorAll('.sec:not(.oculto)').length;
+    v.classList.toggle('oculto', visiveis === 0);
+  });
+  vazio.style.display = achados === 0 ? 'block' : 'none';
+  contador.textContent = termo ? achados + ' seções' : '';
+}
+if (campo) {
+  campo.addEventListener('input', filtrar);
+  campo.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') { campo.value = ''; filtrar(); }
+  });
+}
+var btTopo = document.getElementById('btn-topo');
+if (btTopo) {
+  btTopo.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (campo) { campo.value = ''; filtrar(); }
+  });
+}
+var btExp = document.getElementById('btn-exp');
+if (btExp) {
+  btExp.addEventListener('click', function () {
+    var aberto = document.body.classList.toggle('expandido');
+    btExp.textContent = aberto ? 'recolher' : 'expandir';
+  });
+}
+var raiz = document.documentElement;
+var btTema = document.getElementById('btn-tema');
+if (btTema) {
+  btTema.addEventListener('click', function () {
+    var novo = raiz.getAttribute('data-tema') === 'escuro' ? 'claro' : 'escuro';
+    raiz.setAttribute('data-tema', novo);
+    btTema.textContent = novo === 'escuro' ? 'claro' : 'escuro';
+  });
+}
+</script>
+</body>
+</html>
